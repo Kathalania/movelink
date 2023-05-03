@@ -1,0 +1,40 @@
+.Header{
+    background-color: white;
+}
+.HeaderContainer{
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    font-size: calc(10px + 2vmin);
+    color: #282c34;
+    padding: 1rem 1.5rem;
+}
+
+h2 {
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    font-weight: 50;
+    font-size: calc(10px + 2vmin);
+}
+
+.App-logo {
+    align-items: end;
+    height: 10rem;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

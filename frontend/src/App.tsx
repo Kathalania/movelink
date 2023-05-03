@@ -1,18 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from "./Header";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Hey Tobi!</h1>
-        <h2>und an alle da draußen:</h2>
-        <p>Das Deployment hat geklappt. Jetzt kann's richtig losgehen! :-)</p>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <BrowserRouter>
+            <Header/>
+            <Routes>
+                <Route/>
+            </Routes>
+        </BrowserRouter>
+
+        <ToastContainer theme={"dark"}/>
+
+      <footer className="App-header">
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -21,7 +25,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </footer>
     </div>
   );
 }
