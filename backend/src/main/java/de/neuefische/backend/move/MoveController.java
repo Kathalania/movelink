@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MoveController {
     private final MoveService moveService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Move addMove(@RequestBody Move moveToAdd){
         return moveService.addMove(moveToAdd);
     }

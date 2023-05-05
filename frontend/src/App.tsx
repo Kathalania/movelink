@@ -1,33 +1,27 @@
-import React from 'react';
 import './App.css';
 import Header from "./Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
+import AddMove from "./AddMove";
+import useMoves from "./useMoves";
 
 function App() {
-  return (
-    <div className="App">
-        <BrowserRouter>
-            <Header/>
-            <Routes>
-                <Route/>
-            </Routes>
-        </BrowserRouter>
 
-        <ToastContainer theme={"dark"}/>
+    const {addMove} = useMoves()
 
-      <footer className="App-header">
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </footer>
-    </div>
-  );
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Header/>
+                <Routes>
+                    <Route path="/add"
+                           element={<AddMove addMove={addMove}/>}/>
+                    <Route path="/moves"/>
+                </Routes>
+            </BrowserRouter>
+            <ToastContainer theme={"dark"}/>
+        </div>
+    );
 }
 
 export default App;
