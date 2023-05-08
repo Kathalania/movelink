@@ -1,9 +1,9 @@
 import './App.css';
 import Header from "./Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import AddMove from "./AddMove";
 import useMoves from "./useMoves";
+import React from "react";
 
 function App() {
 
@@ -19,7 +19,6 @@ function App() {
                     <Route path="/moves"/>
                 </Routes>
             </BrowserRouter>
-            <ToastContainer theme={"dark"}/>
         </div>
     );
 }
