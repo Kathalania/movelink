@@ -27,9 +27,9 @@ export default function NavigationBar() {
                     aria-label="basic tabs example"
                     variant="fullWidth"
                 >
-                    <Tab label="Move erstellen" value="/add" />
-                    <Tab label="Alle Moves" value="/moves" />
-                    <Tab label="Meine Choreo" value="/user" />
+                    <Tab label="Create move" value="/add" />
+                    <Tab label="All moves" value="/moves" />
+                    <Tab label="My choreo" value="/user" />
                 </Tabs>
             </Box>
         </div>

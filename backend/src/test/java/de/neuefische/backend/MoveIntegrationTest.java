@@ -30,7 +30,7 @@ class MoveIntegrationTest {
     @Test
     @DirtiesContext
     void addMove_shouldReturnAddedMove() throws Exception {
-        String actual = mockMvc.perform(post("/api/moves")
+        String actual = mockMvc.perform(post("/api/moves/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {
@@ -39,8 +39,8 @@ class MoveIntegrationTest {
                         "description": "Follower nach Rockstep rausschicken",
                         "style": "Lindy Hop",
                         "count": "6-count",
-                        "start": "geschlossen",
-                        "end": "offen"
+                        "start": "closed",
+                        "end": "open"
                         }
                         """
                 )
@@ -54,8 +54,8 @@ class MoveIntegrationTest {
                         "description": "Follower nach Rockstep rausschicken",
                         "style": "Lindy Hop",
                         "count": "6-count",
-                        "start": "geschlossen",
-                        "end": "offen"
+                        "start": "closed",
+                        "end": "open"
                         }
                         """
                 ))
