@@ -1,10 +1,9 @@
 package de.neuefische.backend.move;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,5 +14,15 @@ public class MoveController {
     @PostMapping("/add")
     public Move addMove(@RequestBody Move moveToAdd){
         return moveService.addMove(moveToAdd);
+    }
+
+    @GetMapping("/api/moves")
+    public List<Move> getAllMoves (){
+        return moveService.getAllMoves();
+    }
+
+    @GetMapping("{id}")
+    public Move getMoveById(@PathVariable String id){
+        return moveService.getMoveById(id);
     }
 }

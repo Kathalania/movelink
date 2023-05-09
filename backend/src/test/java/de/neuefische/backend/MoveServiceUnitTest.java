@@ -27,4 +27,8 @@ class MoveServiceUnitTest {
         assertEquals(actual, tuckTurn);
 
     }
+
+    void getMoveById_ShouldReturnMoveWithGivenId(){
+
+    }
 }
