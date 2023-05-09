@@ -14,7 +14,7 @@ function App() {
             <BrowserRouter>
                 <Header/>
                 <Routes>
-                    <Route path="/add"
+                    <Route path="/addMove"
                            element={<AddMove addMove={addMove}/>}/>
                     <Route path="/moves"/>
                 </Routes>

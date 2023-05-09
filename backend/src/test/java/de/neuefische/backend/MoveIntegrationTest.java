@@ -62,6 +62,7 @@ class MoveIntegrationTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
+
         Move actualMove = objectMapper.readValue(actual, Move.class);
         assertThat(actualMove.id())
                 .isNotBlank();
