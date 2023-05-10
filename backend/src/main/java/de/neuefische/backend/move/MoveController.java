@@ -16,7 +16,7 @@ public class MoveController {
         return moveService.addMove(moveToAdd);
     }
 
-    @GetMapping("/api/moves")
+    @GetMapping
     public List<Move> getAllMoves (){
         return moveService.getAllMoves();
     }
