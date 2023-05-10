@@ -12,8 +12,8 @@ class MoveServiceUnitTest {
     @Test
     void addMove_ShouldReturnAddedMove_WhenMoveAdded(){
         //GIVEN
-        final MoveInterface moveInterface = mock(MoveInterface.class);
-        final MoveService moveService = new MoveService(moveInterface);
+        MoveInterface moveInterface = mock(MoveInterface.class);
+        MoveService moveService = new MoveService(moveInterface);
 
         Move tuckTurn = new Move("1", "Tuck Turn", "Rotational Rockstep, eindrehen, unter Arm durchdrehen über rechte Schulter", "Lindy Hop",
                 "6-count", "geschlossen", "offen");

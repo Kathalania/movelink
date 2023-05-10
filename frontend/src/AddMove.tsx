@@ -31,7 +31,6 @@ export default function AddMove(props: AddMoveProps) {
     }
 
     return (
-        <div>
             <form onSubmit={onClickSaveMove}>
 
                 <TextField
@@ -120,6 +119,5 @@ export default function AddMove(props: AddMoveProps) {
 
                 <Button type="submit" variant="contained">Save</Button>
             </form>
-        </div>
     )
 }
