@@ -12,6 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,6 +68,24 @@ class MoveIntegrationTest {
         assertThat(actualMove.id())
                 .isNotBlank();
     }
+    @Test
+    @DirtiesContext
+    void getMoveById_shouldReturnMoveWithId() throws Exception{
+        Move moveWithId = new Move("1", "", "", "", "", "", "");
+        moveInterface.save(moveWithId);
 
-
+        mockMvc.perform(get("/api/moves/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                        "id": "1",
+                        "name": "",
+                        "description": "",
+                        "style": "",
+                        "count": "",
+                        "start": "",
+                        "end": ""
+                        }
+                        """));
+    }
 }
