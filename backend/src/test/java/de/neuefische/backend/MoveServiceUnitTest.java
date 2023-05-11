@@ -68,7 +68,7 @@ class MoveServiceUnitTest {
 
     @Test
     @DirtiesContext
-    void getMoveById_shouldReturnException_whenIdNotFound_AlternativeTest(){
+    void getMoveById_shouldReturnException_whenIdNotFound_AlternativeTest() {
         //GIVEN
         when(moveInterface.findById("2")).thenThrow(NoSuchElementException.class);
 
@@ -86,7 +86,7 @@ class MoveServiceUnitTest {
 
     @Test
     @DirtiesContext
-    void getAllMoves_shouldReturnListOfAllMoves(){
+    void getAllMoves_shouldReturnListOfAllMoves() {
         //GIVEN
         Move move1 = new Move("5", "", "", "", "", "", "");
         Move move2 = new Move("67", "", "", "", "", "", "");
@@ -94,11 +94,11 @@ class MoveServiceUnitTest {
         List<Move> expectedMoves = Arrays.asList(move1, move2);
 
         //WHEN
-        List <Move> actualMoves = moveService.getAllMoves();
+        List<Move> actualMoves = moveService.getAllMoves();
 
         //THEN
         assertEquals(actualMoves.size(), expectedMoves.size());
-        for (int i=0; i < expectedMoves.size(); i++){
+        for (int i = 0; i < expectedMoves.size(); i++) {
             Assertions.assertEquals(expectedMoves.get(i), actualMoves.get(i));
         }
         verify(moveInterface, times(1)).findAll();
@@ -106,7 +106,7 @@ class MoveServiceUnitTest {
 
     @Test
     @DirtiesContext
-    void getAllMoves_shouldReturnEmptyList_whenDatabaseIsEmpty(){
+    void getAllMoves_shouldReturnEmptyList_whenDatabaseIsEmpty() {
         //GIVEN
         when(moveInterface.findAll()).thenReturn(Collections.emptyList());
 
@@ -117,6 +117,20 @@ class MoveServiceUnitTest {
         //THEN
         verify(moveInterface).findAll();
         assertEquals(actual, expected);
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteMoveById_shouldReturnDeleteSuccessful() {
+        //GIVEN
+        Move moveToDelete = new Move("16", "Lösch mich", "Rotational Rockstep, eindrehen, unter Arm durchdrehen über rechte Schulter", "Lindy Hop",
+                "6-count", "geschlossen", "offen");
+        moveInterface.save(moveToDelete);
+        //WHEN
+        moveService.deleteMove("16");
+
+        //THEN
+        verify(moveInterface).deleteById("16");
     }
 
 }

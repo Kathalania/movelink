@@ -12,8 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -144,5 +143,39 @@ class MoveIntegrationTest {
                                 []
                                 """
                 ));
+    }
+
+    @DirtiesContext
+    @Test
+    void deleteMove_shouldReturnReducedContent() throws Exception {
+        String saveResult = mockMvc.perform(
+                post("/api/moves/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "name":"Lösch mich",
+                                "description":"",
+                                "style":"",
+                                "count": "10",
+                                "start": "",
+                                "end": ""
+                                }
+                                """)
+        )
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        Move saveResultMove = objectMapper.readValue(saveResult, Move.class);
+        String id = saveResultMove.id();
+
+        mockMvc.perform(delete("/api/moves/" + id)
+        )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/moves"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
     }
 }

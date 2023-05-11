@@ -25,4 +25,9 @@ public class MoveController {
     public Move getMoveById(@PathVariable String id){
         return moveService.getMoveById(id);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteMove(@PathVariable String id){
+        moveService.deleteMove(id);
+    }
 }

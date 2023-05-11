@@ -23,4 +23,8 @@ public class MoveService {
         return moveInterface.findById(id).orElseThrow(()
                 -> new NoSuchElementException("Move with id " + id + " not found!"));
     }
+
+    public void deleteMove(String id) {
+        moveInterface.deleteById(id);
+    }
 }
