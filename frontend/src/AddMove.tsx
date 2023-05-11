@@ -1,6 +1,7 @@
 import React, {FormEvent, useState} from "react";
 import {NewMove} from "./Move";
 import {useNavigate} from "react-router-dom";
+import SaveIcon from '@mui/icons-material/Save';
 import {
     Button,
     SelectChangeEvent,
@@ -126,7 +127,7 @@ export default function AddMove(props: AddMoveProps) {
                         <MenuItem value="closed">closed</MenuItem>
                     </Select>
                 </FormControl>
-                <Button type="submit" variant="contained">Save</Button>
+                <Button id="galleryBtn" type="submit" variant="outlined" startIcon={<SaveIcon/>}>Save</Button>
             </Container>
             </Box>
         </form>
