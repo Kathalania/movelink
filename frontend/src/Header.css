@@ -9,6 +9,7 @@
     font-size: calc(20px + 2vmin);
     color: #282c34;
     padding: 1rem 1.5rem;
+    background-color: white;
 }
 
 h1 {
@@ -25,7 +26,7 @@ h2 {
 
 .App-logo {
     align-items: end;
-    height: 20rem;
+    height: 10rem;
     pointer-events: none;
 }
 

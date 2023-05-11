@@ -28,15 +28,15 @@ export default function useMoves() {
     }
 
     function deleteMove(id: string) {
-        axios.delete("/api/moves" + id)
+        axios.delete("/api/moves/" + id)
             .then(() => {
-                setMoves(moves.filter((move) => move.id != id))
+                setMoves(moves.filter((move) => move.id !== id))
                 toast.success("Move deleted")
             })
             .catch(console.error)
     }
 
 
-    return {addMove, deleteMove, loadAllMoves, moves}
+    return {addMove, deleteMove, moves}
 
 }
