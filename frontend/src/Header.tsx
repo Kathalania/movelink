@@ -1,5 +1,5 @@
-import NavigationBar from "./NavigationBar";
 import './Header.css';
+import NavigationBar from "./NavigationBar";
 
 export default function Header(){
 

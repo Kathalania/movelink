@@ -2,5 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    border-color: #282c34;
+    border-radius: 1rem;
     background-color: white;
 }

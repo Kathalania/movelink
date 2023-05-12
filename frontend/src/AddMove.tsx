@@ -1,7 +1,17 @@
 import React, {FormEvent, useState} from "react";
 import {NewMove} from "./Move";
 import {useNavigate} from "react-router-dom";
-import {Button, SelectChangeEvent, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import SaveIcon from '@mui/icons-material/Save';
+import {
+    Button,
+    SelectChangeEvent,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Container, Box
+} from "@mui/material";
 
 type AddMoveProps = {
     addMove: (newMove: NewMove) => void
@@ -31,8 +41,9 @@ export default function AddMove(props: AddMoveProps) {
     }
 
     return (
-            <form onSubmit={onClickSaveMove}>
-
+        <form onSubmit={onClickSaveMove}>
+            <Box mt={2} mb={2}>
+            <Container maxWidth="sm">
                 <TextField
                     required
                     fullWidth
@@ -116,8 +127,10 @@ export default function AddMove(props: AddMoveProps) {
                         <MenuItem value="closed">closed</MenuItem>
                     </Select>
                 </FormControl>
+                <Button id="galleryBtn" type="submit" variant="outlined" startIcon={<SaveIcon/>}>Save</Button>
+            </Container>
+            </Box>
+        </form>
 
-                <Button type="submit" variant="contained">Save</Button>
-            </form>
     )
 }
