@@ -91,7 +91,8 @@ class MoveServiceUnitTest {
         Move move1 = new Move("5", "", "", "", "", "", "");
         Move move2 = new Move("67", "", "", "", "", "", "");
 
-        List<Move> expectedMoves = Arrays.asList(move1, move2);
+        List<Move>expectedMoves = Arrays.asList(move1, move2);
+        when(moveInterface.findAll()).thenReturn(expectedMoves);
 
         //WHEN
         List<Move> actualMoves = moveService.getAllMoves();
