@@ -27,4 +27,8 @@ public class MoveService {
     public void deleteMove(String id) {
         moveInterface.deleteById(id);
     }
+
+    public Move editMove(Move moveToEdit){
+        return moveInterface.save(moveToEdit);
+    }
 }

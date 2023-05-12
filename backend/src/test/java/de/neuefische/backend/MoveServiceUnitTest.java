@@ -134,4 +134,20 @@ class MoveServiceUnitTest {
         verify(moveInterface).deleteById("16");
     }
 
+    @Test
+    @DirtiesContext
+    void editMove_ShouldReturnEditedMove_whenIdIsValid(){
+        //GIVEN
+        Move editedMove = new Move("3", "Edit Move", "", "", "4", "", "");
+        when(moveInterface.save(editedMove)).thenReturn(editedMove);
+
+        //WHEN
+        Move actual = moveService.editMove(editedMove);
+
+        //THEN
+        verify(moveInterface).save(editedMove);
+        assertEquals(actual, editedMove);
+
+    }
+
 }
