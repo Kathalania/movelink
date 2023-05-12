@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export default function(){
+export default function useDetail(){
 
     const initialState: Move = {id: "", name: "", description: "", style: "", count: "", start: "", end: ""}
     const [move, setMove] = useState<Move>(initialState)
@@ -15,14 +15,14 @@ export default function(){
         if (id) {
             loadMoveById(id)
         }
-    }, [])
+    }, [id])
 
     function loadMoveById(id: string){
         axios.get("/api/moves/" + id)
             .then((response) => {
                 setMove(response.data)
             })
-            .catch((error) => {
+            .catch(() => {
                 toast.error("Move does not exist")
             })
 

@@ -2,3 +2,9 @@
     align-items: center;
     margin: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+    .move-card {
+        flex-direction: column;
+    }
+}
