@@ -38,7 +38,7 @@ export default function MoveCard (props: MoveProps){
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button id="galleryBtn" type="submit" variant="outlined" startIcon={<RemoveRedEyeIcon/>} onClick={() => {navigate("/moves/" + props.move.id)}}>
+                    <Button id="galleryBtn" type="submit" variant="contained" startIcon={<RemoveRedEyeIcon/>} onClick={() => {navigate("/moves/" + props.move.id)}}>
                         See description</Button>
                 </CardActions>
             </Card>

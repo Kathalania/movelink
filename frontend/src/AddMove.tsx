@@ -113,7 +113,7 @@ export default function AddMove(props: AddMoveProps) {
                     </Select>
                 </FormControl>
 
-                <FormControl required fullWidth variant="filled" style={{backgroundColor: 'lightgray'}}>
+                <FormControl required fullWidth variant="filled" style={{backgroundColor: "lightgray"}}>
                     <InputLabel>End position</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -127,7 +127,7 @@ export default function AddMove(props: AddMoveProps) {
                         <MenuItem value="closed">closed</MenuItem>
                     </Select>
                 </FormControl>
-                <Button id="galleryBtn" type="submit" variant="outlined" startIcon={<SaveIcon/>}>Save</Button>
+                <Button id="galleryBtn" type="submit" variant="contained" startIcon={<SaveIcon/>}>Save</Button>
             </Container>
             </Box>
         </form>

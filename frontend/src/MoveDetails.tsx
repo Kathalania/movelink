@@ -5,9 +5,12 @@ import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./MoveDetail.css"
+import EditIcon from '@mui/icons-material/Edit';
+import {Move} from "./Move";
 
 type MoveDetailProps = {
     deleteMove: (id: string) => void
+    move: Move
 }
 export default function MoveDetails(props: MoveDetailProps) {
 
@@ -53,7 +56,7 @@ export default function MoveDetails(props: MoveDetailProps) {
                             <Item>End position: {move.end}</Item>
                         </Grid>
                         <Grid item xs={6}>
-                        <Button id="galleryBtn" type="submit" variant="outlined" startIcon={<ArrowBackIcon/>} onClick={() => {
+                        <Button id="galleryBtn" type="submit" variant="contained" startIcon={<ArrowBackIcon/>} onClick={() => {
                             navigate("/moves")
                         }}>gallery</Button>
                         </Grid>
@@ -61,6 +64,10 @@ export default function MoveDetails(props: MoveDetailProps) {
                         <Button id="deleteBtn" type="submit" variant="outlined" color="error" startIcon={<DeleteIcon/>}
                                 onClick={deleteMoveOnClick}>delete</Button>
                             </Grid>
+                        <Grid item xs={6}>
+                            <Button id="galleryBtn" type="submit" variant="contained" startIcon={<EditIcon/>}
+                                    onClick={() => {navigate("/moves/" + move.id + "/update")}}>edit</Button>
+                        </Grid>
                     </Grid>
                 </Container>
             </Box>

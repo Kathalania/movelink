@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 export default function useMoves() {
 
     const [moves, setMoves] = useState<Move[]>([])
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         loadAllMoves()
@@ -35,6 +36,8 @@ export default function useMoves() {
             })
             .catch(console.error)
     }
+
+
 
 
     return {addMove, deleteMove, moves}

@@ -11,9 +11,9 @@ h3{
 }
 
 #galleryBtn {
-    background-color: lightgrey;
-    color: #282c34;
+    background-color: dimgray;
     margin-top: .5rem;
+    color: lightgrey;
 }
 
 #deleteBtn {
