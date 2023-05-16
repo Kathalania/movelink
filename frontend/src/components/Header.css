@@ -2,29 +2,36 @@
     background-color: lightgrey;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .HeaderContainer {
-    background-color: lightgrey;
-    margin-right: 0.2rem;
-    margin-left: 0.2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    background-color: #1B1E24;
+    height: 6rem;
+    padding-left: 1.2rem;
+    padding-right: 2rem;
 }
 
 h1 {
     font-weight: 300;
-    font-size: 2.5rem;
-    justify-content: center;
+    font-size: calc(1.3rem + 1.5vw);
+    color: lightgrey;
 }
 
 h2 {
     font-weight: 20;
-    font-size: 1.2rem;
-    background-color: lightgrey;
+    font-size: calc(0.4rem + 1vw);
+    color: lightgrey;
 }
 
 .App-logo {
-    height: 8rem;
-    pointer-events: none;
+    height: 4rem;
+    display: flex;
+    justify-content: start;
 }
 
 @media (prefers-reduced-motion: no-preference) {
