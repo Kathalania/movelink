@@ -6,6 +6,7 @@ import useMoves from "./useMoves";
 import MoveGallery from "./MoveGallery";
 import {ToastContainer} from "react-toastify";
 import DetailRouting from "./DetailRouting";
+import ChoreoGallery from "./ChoreoGallery";
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
                     element={<MoveGallery moves={moves}/>}/>
                     <Route path="/moves/:id/*"
                            element={<DetailRouting editMove={editMove} deleteMove={deleteMove}/>}/>
+                    <Route path="/choreo"
+                           element={<ChoreoGallery/>}/>
                 </Routes>
         </div>
     );

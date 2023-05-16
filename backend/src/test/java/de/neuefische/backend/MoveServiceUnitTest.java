@@ -50,9 +50,8 @@ class MoveServiceUnitTest {
         Move actual = moveService.getMoveById("123");
 
         //THEN
-        Move expected = new Move("123", "Move", "", "", "", "", "");
         verify(moveInterface).findById("123");
-        assertEquals(actual, expected);
+        assertEquals(actual, moveWithId);
     }
 
     @Test
@@ -103,6 +102,7 @@ class MoveServiceUnitTest {
             Assertions.assertEquals(expectedMoves.get(i), actualMoves.get(i));
         }
         verify(moveInterface, times(1)).findAll();
+        assertEquals(actualMoves, expectedMoves);
     }
 
     @Test

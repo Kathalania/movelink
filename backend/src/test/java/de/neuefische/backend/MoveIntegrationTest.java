@@ -135,7 +135,7 @@ class MoveIntegrationTest {
 
     @DirtiesContext
     @Test
-    void getAllMoves_shouldReturnAllMoves() throws Exception {
+    void getAllMoves_shouldReturnEmptyList_whenNoMoves() throws Exception {
         mockMvc.perform(get("/api/moves"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(

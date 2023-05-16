@@ -1,6 +1,6 @@
 import {
     Box,
-    Button,
+    Button, CircularProgress,
     Container,
     FormControl, Grid,
     InputLabel,
@@ -187,9 +187,9 @@ export default function EditMove(props: EditMoveProps) {
                                         id="galleryBtn"
                                         type="button"
                                         variant="contained"
-                                        onClick={() => {
-                                        navigate(1)
-                                    }} startIcon={<ArrowBackIcon/>}>Back to move
+                                        onClick={() => {navigate("/moves/" + props.move.id)}}
+                                        startIcon={<ArrowBackIcon/>}>
+                                        Back to move
                                     </Button>
 
                                     <Button
@@ -205,7 +205,9 @@ export default function EditMove(props: EditMoveProps) {
                     </Box>
                 </form>
             ) : (
-                <div>Loading ... </div>
+                <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
             )}
         </div>
 

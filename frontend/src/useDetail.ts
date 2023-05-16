@@ -27,23 +27,6 @@ export default function useDetail() {
             })
     }
 
-
-
-    /*    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-            event.preventDefault();
-            axios
-                .put("/api/moves/" + id + "/edit", editedMove)
-                .then((response) => {
-                    setMove(response.data);
-                    setEditing(false);
-                    window.location.reload();
-                    toast.success("Move updated");
-                })
-                .catch((error) => {
-                    toast.error("Update not successful")
-                })
-        }*/
-
     return {
         move, setMove
     }
