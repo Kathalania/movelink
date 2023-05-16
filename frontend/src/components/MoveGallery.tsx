@@ -1,4 +1,4 @@
-import {Move} from "./Move";
+import {Move} from "../models/Move";
 import MoveCard from "./MoveCard";
 
 type MoveGalleryProps = {

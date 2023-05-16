@@ -5,13 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./MoveDetail.css"
 import EditIcon from '@mui/icons-material/Edit';
-import {Move} from "./Move";
+import {Move} from "../models/Move";
 
 type MoveDetailProps = {
     deleteMove: (id: string) => void
     move: Move
 }
-export default function MoveDetails(props: MoveDetailProps) {
+export default function MoveDetail(props: MoveDetailProps) {
 
     const navigate = useNavigate()
     const Item = styled(Paper)(({theme}) => ({

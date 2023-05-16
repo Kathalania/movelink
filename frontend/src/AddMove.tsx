@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from "react";
-import {NewMove} from "./Move";
+import {NewMove} from "./models/Move";
 import {useNavigate} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import {

@@ -1,4 +1,4 @@
-import {Move} from "./Move";
+import {Move} from "../models/Move";
 import {useNavigate} from "react-router-dom";
 import {Button, Card, CardActions, CardContent, Container, Typography} from "@mui/material";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';

@@ -1,4 +1,4 @@
-import {Move, NewMove} from "./Move";
+import {Move, NewMove} from "../models/Move";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";

@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./MoveDetail.css"
 import {toast} from "react-toastify";
-import {Move} from "./Move";
+import {Move} from "../models/Move";
 
 type EditMoveProps = {
     move: Move

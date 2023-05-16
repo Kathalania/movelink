@@ -1,9 +1,9 @@
 import {Route, Routes} from "react-router-dom";
-import MoveDetails from "./MoveDetails";
+import MoveDetail from "./MoveDetail";
 import EditMove from "./EditMove";
-import useDetail from "./useDetail";
+import useDetail from "../hooks/useDetail";
 import React from "react";
-import {Move} from "./Move";
+import {Move} from "../models/Move";
 
 type DetailRoutingProps = {
     deleteMove: (id: string) => void
@@ -22,7 +22,7 @@ export default function DetailRouting(props: DetailRoutingProps) {
     return (
         <Routes>
             <Route index
-                   element={<MoveDetails deleteMove={props.deleteMove} move={move}/>}/>
+                   element={<MoveDetail deleteMove={props.deleteMove} move={move}/>}/>
             <Route path={"/edit"}
                    element={<EditMove setMove={setMove} editMove={props.editMove} move={move}/>}/>
         </Routes>
