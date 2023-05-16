@@ -2,11 +2,11 @@ import {Move, NewMove} from "./Move";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function useMoves() {
 
     const [moves, setMoves] = useState<Move[]>([])
-    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         loadAllMoves()
@@ -28,6 +28,22 @@ export default function useMoves() {
             })
     }
 
+    function editMove(move: Move) {
+        return axios.put(`/api/moves/${move.id}/edit`, move)
+            .then((putMoveResponse) => {
+                setMoves(moves.map(moveToEdit => {
+                    if (moveToEdit.id === move.id) {
+                        return putMoveResponse.data
+                    }
+                    else {
+                        return moveToEdit
+                    }
+                }))
+                return putMoveResponse.data
+            })
+            .catch(console.error)
+    }
+
     function deleteMove(id: string) {
         axios.delete("/api/moves/" + id)
             .then(() => {
@@ -38,8 +54,6 @@ export default function useMoves() {
     }
 
 
-
-
-    return {addMove, deleteMove, moves}
+    return {addMove, deleteMove, moves, editMove}
 
 }

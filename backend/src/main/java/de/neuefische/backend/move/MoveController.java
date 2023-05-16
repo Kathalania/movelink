@@ -33,7 +33,7 @@ public class MoveController {
         moveService.deleteMove(id);
     }
 
-    @PutMapping(path = {"{id}/edit", "{id}"})
+    @PutMapping(path = {"/{id}/edit", "{id}"})
     public Move editMove(@PathVariable String id, @RequestBody Move moveToEdit){
         if (!moveToEdit.id().equals(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Move does not exist");

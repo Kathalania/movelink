@@ -1,5 +1,4 @@
 import {useNavigate} from "react-router-dom";
-import useDetail from "./useDetail";
 import {Box, Button, Container, Grid, Paper, styled} from "@mui/material";
 import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -14,19 +13,18 @@ type MoveDetailProps = {
 }
 export default function MoveDetails(props: MoveDetailProps) {
 
-    const {move} = useDetail()
     const navigate = useNavigate()
     const Item = styled(Paper)(({theme}) => ({
-        backgroundColor: theme.palette.mode === 'light' ? 'lightgrey' : '#fff',
+        backgroundColor: theme.palette.mode === 'light' ? '#1B1E24' : 'white',
         ...theme.typography.body1,
         padding: theme.spacing(1),
         textAlign: 'start',
-        color: theme.palette.text.primary,
+        color: 'lightgrey'
     }))
 
     function deleteMoveOnClick() {
-        if (move) {
-            props.deleteMove(move.id)
+        if (props.move) {
+            props.deleteMove(props.move.id)
         }
         navigate("/moves")
     }
@@ -34,39 +32,42 @@ export default function MoveDetails(props: MoveDetailProps) {
     return (
         <div className={"move-details"}>
             <h3>DETAILS</h3>
-            <Box mt={2} mb={2}>
+            <Box mt={2} mb={2} sx={{textAlign: "start", whiteSpace: "pre-line"}}>
                 <Container maxWidth="sm">
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Item>{move.name}</Item>
+                            <Item>{props.move.name}</Item>
                         </Grid>
                         <Grid item xs={12}>
-                            <Item>{move.description}</Item>
+                            <Item>{props.move.description}</Item>
                         </Grid>
                         <Grid item xs={6}>
-                            <Item>{move.style}</Item>
+                            <Item>{props.move.style}</Item>
                         </Grid>
                         <Grid item xs={6}>
-                            <Item>{move.count}-count</Item>
+                            <Item>{props.move.count}-count</Item>
                         </Grid>
                         <Grid item xs={6} sm={6}>
-                            <Item>Starting position: {move.start}</Item>
+                            <Item>Starting position: {props.move.start}</Item>
                         </Grid>
                         <Grid item xs={6}>
-                            <Item>End position: {move.end}</Item>
+                            <Item>End position: {props.move.end}</Item>
                         </Grid>
-                        <Grid item xs={6}>
-                        <Button id="galleryBtn" type="submit" variant="contained" startIcon={<ArrowBackIcon/>} onClick={() => {
-                            navigate("/moves")
-                        }}>gallery</Button>
-                        </Grid>
-                            <Grid item xs={6}>
-                        <Button id="deleteBtn" type="submit" variant="outlined" color="error" startIcon={<DeleteIcon/>}
-                                onClick={deleteMoveOnClick}>delete</Button>
+
+                        <Grid item xs={12}>
+                            <Grid container spacing={2} justifyContent="space-evenly" mt={2}>
+                                <Button id="galleryBtn" type="submit" variant="contained" startIcon={<ArrowBackIcon/>}
+                                        onClick={() => {
+                                            navigate("/moves")
+                                        }}>gallery</Button>
+                                <Button id="galleryBtn" type="submit" variant="contained" startIcon={<EditIcon/>}
+                                        onClick={() => {
+                                            navigate("/moves/" + props.move.id + "/edit")
+                                        }}>edit</Button>
+                                <Button id="deleteBtn" type="submit" variant="outlined" color="error"
+                                        startIcon={<DeleteIcon/>}
+                                        onClick={deleteMoveOnClick}>delete</Button>
                             </Grid>
-                        <Grid item xs={6}>
-                            <Button id="galleryBtn" type="submit" variant="contained" startIcon={<EditIcon/>}
-                                    onClick={() => {navigate("/moves/" + move.id + "/update")}}>edit</Button>
                         </Grid>
                     </Grid>
                 </Container>
