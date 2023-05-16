@@ -14,15 +14,6 @@ h3 {
     justify-content: center;
 }
 
-/*
-.editBtns {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-}
-*/
-
 #galleryBtn {
     background-color: dimgray;
     margin-top: .5rem;
