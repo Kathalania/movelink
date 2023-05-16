@@ -29,7 +29,7 @@ export default function NavigationBar() {
                 >
                     <Tab label="Create move" value="/addMove" />
                     <Tab label="All moves" value="/moves" />
-                    <Tab label="My choreo" value="/user" />
+                    <Tab label="My choreo" value="/choreo" />
                 </Tabs>
             </Box>
         </div>

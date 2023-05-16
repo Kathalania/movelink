@@ -135,7 +135,7 @@ class MoveIntegrationTest {
 
     @DirtiesContext
     @Test
-    void getAllMoves_shouldReturnAllMoves() throws Exception {
+    void getAllMoves_shouldReturnEmptyList_whenNoMoves() throws Exception {
         mockMvc.perform(get("/api/moves"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
@@ -149,19 +149,19 @@ class MoveIntegrationTest {
     @Test
     void deleteMove_shouldReturnReducedContent() throws Exception {
         String saveResult = mockMvc.perform(
-                post("/api/moves/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "name":"Lösch mich",
-                                "description":"",
-                                "style":"",
-                                "count": "10",
-                                "start": "",
-                                "end": ""
-                                }
-                                """)
-        )
+                        post("/api/moves/add")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "name":"Lösch mich",
+                                        "description":"",
+                                        "style":"",
+                                        "count": "10",
+                                        "start": "",
+                                        "end": ""
+                                        }
+                                        """)
+                )
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
@@ -169,7 +169,7 @@ class MoveIntegrationTest {
         String id = saveResultMove.id();
 
         mockMvc.perform(delete("/api/moves/" + id)
-        )
+                )
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/api/moves"))
@@ -177,5 +177,57 @@ class MoveIntegrationTest {
                 .andExpect(content().json("""
                         []
                         """));
+    }
+
+    @DirtiesContext
+    @Test
+    void editMoveById_ShouldReturnEditedMove() throws Exception {
+        mockMvc.perform(put("/api/moves/1234/edit")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id":"1234",
+                                "name":"Edited Move",
+                                "description":"",
+                                "style":"Lindy Hop",
+                                "count": "6-count",
+                                "start": "open",
+                                "end": "open"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                               {
+                               "id":"1234",
+                               "name":"Edited Move",
+                                "description":"",
+                                "style":"Lindy Hop",
+                                "count": "6-count",
+                                "start": "open",
+                                "end": "open"
+                                }
+                               """
+                ));
+    }
+
+    @DirtiesContext
+    @Test
+    void editMoveById_shouldReturnBadRequest() throws Exception {
+        mockMvc.perform(put("/api/moves/1234/edit")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id":"13",
+                                    "name":"Bad Request",
+                                    "description":"",
+                                    "style":"Lindy Hop",
+                                    "count": "6-count",
+                                    "start": "open",
+                                    "end": "open"
+                                }
+                                """))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -50,9 +50,8 @@ class MoveServiceUnitTest {
         Move actual = moveService.getMoveById("123");
 
         //THEN
-        Move expected = new Move("123", "Move", "", "", "", "", "");
         verify(moveInterface).findById("123");
-        assertEquals(actual, expected);
+        assertEquals(actual, moveWithId);
     }
 
     @Test
@@ -103,6 +102,7 @@ class MoveServiceUnitTest {
             Assertions.assertEquals(expectedMoves.get(i), actualMoves.get(i));
         }
         verify(moveInterface, times(1)).findAll();
+        assertEquals(actualMoves, expectedMoves);
     }
 
     @Test
@@ -132,6 +132,22 @@ class MoveServiceUnitTest {
 
         //THEN
         verify(moveInterface).deleteById("16");
+    }
+
+    @Test
+    @DirtiesContext
+    void editMove_ShouldReturnEditedMove_whenIdIsValid(){
+        //GIVEN
+        Move editedMove = new Move("3", "Edit Move", "", "", "4", "", "");
+        when(moveInterface.save(editedMove)).thenReturn(editedMove);
+
+        //WHEN
+        Move actual = moveService.editMove(editedMove);
+
+        //THEN
+        verify(moveInterface).save(editedMove);
+        assertEquals(actual, editedMove);
+
     }
 
 }
