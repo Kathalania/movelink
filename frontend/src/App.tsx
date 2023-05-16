@@ -1,16 +1,18 @@
 import './App.css';
 import Header from "./components/Header";
 import {Route, Routes} from "react-router-dom";
-import AddMove from "./AddMove";
+import AddMove from "./components/AddMove";
 import useMoves from "./hooks/useMoves";
 import MoveGallery from "./components/MoveGallery";
 import {ToastContainer} from "react-toastify";
 import DetailRouting from "./components/DetailRouting";
 import ChoreoGallery from "./components/ChoreoGallery";
+import useChoreos from "./hooks/useChoreos";
 
 function App() {
 
     const {addMove, deleteMove, moves, editMove} = useMoves()
+    const {choreos} = useChoreos()
 
     return (
         <div className="App">
@@ -23,8 +25,8 @@ function App() {
                     element={<MoveGallery moves={moves}/>}/>
                     <Route path="/moves/:id/*"
                            element={<DetailRouting editMove={editMove} deleteMove={deleteMove}/>}/>
-                    <Route path="/choreo"
-                           element={<ChoreoGallery/>}/>
+                    <Route path="/choreos"
+                           element={<ChoreoGallery choreos={choreos}/>}/>
                 </Routes>
         </div>
     );
