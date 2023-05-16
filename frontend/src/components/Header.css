@@ -1,8 +1,8 @@
 .Header {
     background-color: lightgrey;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 3;
 }
 
 .HeaderContainer {
@@ -14,6 +14,7 @@
     height: 6rem;
     padding-left: 1.2rem;
     padding-right: 2rem;
+    box-shadow:0 0 0.5rem #1B1E24;
 }
 
 h1 {
