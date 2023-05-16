@@ -1,22 +1,16 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import {SyntheticEvent, useEffect, useState} from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useState} from "react";
+import { useNavigate } from "react-router-dom";
 import "./NavigationBar.css";
 
 export default function NavigationBar() {
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const [value, setValue] = useState(location.pathname);
+    const navigate = useNavigate()
+    const [value, setValue] = useState(0)
 
-    const handleChange = (event: SyntheticEvent, newValue: string) => {
-        setValue(newValue);
-        navigate(newValue);
-    };
-
-    useEffect(() => {
-        setValue(location.pathname);
-    }, [location]);
+    const handleChange = (event: any, newValue: any) => {
+        setValue(newValue)
+    }
 
     return (
         <div>
@@ -27,11 +21,11 @@ export default function NavigationBar() {
                     aria-label="basic tabs example"
                     variant="fullWidth"
                 >
-                    <Tab label="Create move" value="/addMove" />
-                    <Tab label="All moves" value="/moves" />
-                    <Tab label="My choreo" value="/choreo" />
+                    <Tab label="Create move" onClick={() => {navigate("/addMove")}} />
+                    <Tab label="All moves" onClick={() => {navigate("/moves")}} />
+                    <Tab label="My choreo" onClick={() => {navigate("/choreo")}} />
                 </Tabs>
             </Box>
         </div>
-    );
+    )
 }
