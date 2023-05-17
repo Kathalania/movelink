@@ -25,8 +25,8 @@ function App() {
                     element={<MoveGallery moves={moves}/>}/>
                     <Route path="/moves/:id/*"
                            element={<DetailRouting editMove={editMove} deleteMove={deleteMove}/>}/>
-                    <Route path="/choreos"
-                           element={<ChoreoGallery choreos={choreos}/>}/>
+                    <Route path="/choreos/*"
+                           element={<ChoreoGallery moves={moves} choreos={choreos}/>}/>
                 </Routes>
         </div>
     );
