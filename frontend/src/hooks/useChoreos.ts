@@ -8,7 +8,7 @@ export default function useChoreos() {
     useEffect(() => {loadAllChoreos()}, [])
 
     function loadAllChoreos(){
-        axios.get("/api/choreo/all")
+        axios.get("/api/choreo")
             .then((getAllChoreosResponse) => {
                 setChoreos(getAllChoreosResponse.data)
             })

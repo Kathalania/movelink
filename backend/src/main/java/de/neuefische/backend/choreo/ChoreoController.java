@@ -15,13 +15,13 @@ public class ChoreoController {
 
     private final ChoreoService choreoService;
 
-    @GetMapping("/all")
-    public List<Choreo> getAllChoreos(){
+    @GetMapping
+    public List<ChoreoDTO> getAllChoreos(){
         return choreoService.getAllChoreos();
     }
 
     @GetMapping("{id}")
-    public Choreo getChoreoById (@PathVariable String id){
+    public ChoreoDTO getChoreoById (@PathVariable String id){
         return choreoService.getChoreoById(id);
     }
 

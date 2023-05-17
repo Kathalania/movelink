@@ -1,15 +1,14 @@
 package de.neuefische.backend.choreo;
 
-import de.neuefische.backend.move.Move;
 import org.springframework.data.annotation.Id;
 
-import java.util.Map;
+import java.util.List;
 
 public record Choreo(
         @Id
         String id,
         String name,
-        Map<Move, String> choreo
+        List<String> moveIds
 
         ) {
 }
