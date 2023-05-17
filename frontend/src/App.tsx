@@ -1,12 +1,12 @@
 import './App.css';
-import Header from "./components/Header";
+import Header from "./static/Header";
 import {Route, Routes} from "react-router-dom";
 import AddMove from "./components/AddMove";
 import useMoves from "./hooks/useMoves";
 import MoveGallery from "./components/MoveGallery";
 import {ToastContainer} from "react-toastify";
 import DetailRouting from "./components/DetailRouting";
-import ChoreoGallery from "./components/ChoreoGallery";
+import ChoreoGallery from "./choreoComponents/ChoreoGallery";
 import useChoreos from "./hooks/useChoreos";
 
 function App() {

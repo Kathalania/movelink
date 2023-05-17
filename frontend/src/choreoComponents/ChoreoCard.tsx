@@ -3,7 +3,6 @@ import React from "react";
 import {Box, Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {useNavigate} from "react-router-dom";
-import "./ChoreoCard.css"
 
 type ChoreoProps = {
     choreo: Choreo
@@ -14,10 +13,13 @@ export default function ChoreoCard(props: ChoreoProps) {
 
     return (
         <div className="choreo-card">
-            <Box sx={{ boxShadow: 4, width: 500, mb: 2, padding: 1}}>
-                <h3>{props.choreo.name}</h3>
+            <Box sx={{ boxShadow: 5, width: 500, mb: 2, padding: 1}}>
+                <h2>{props.choreo.name.toUpperCase()}</h2>
                 {props.choreo.choreoMoves.map((move) =>
-                    (<Card className='choreo-move' style={{backgroundColor: "#1B1E24", color: "lightgrey", justifyContent: "start"}}>
+                    (<Card className='choreo-move' style={{backgroundColor: "#1B1E24",
+                            color: "lightgrey",
+                            justifyContent: "start",
+                            margin: 2}}>
                             <CardContent>
                                 <Typography gutterBottom variant="h6" component="div">
                                     {move.name}
@@ -27,9 +29,6 @@ export default function ChoreoCard(props: ChoreoProps) {
                                 </Typography>
                                 <Typography variant="body1" color="lightgrey">
                                     {move.style}
-                                </Typography>
-                                <Typography color="lightgrey">
-                                    ___
                                 </Typography>
                             </CardContent>
                         </Card>
