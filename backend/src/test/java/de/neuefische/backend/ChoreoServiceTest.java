@@ -116,4 +116,24 @@ class ChoreoServiceTest {
         Assertions.assertEquals(choreo.name(), result.name());
         Assertions.assertEquals(expectedMoves, result.choreoMoves());
     }
+
+    @DirtiesContext
+    @Test
+    void deleteChoreoById_withChoreoDTOId_shouldReturnSuccessful_Delete(){
+        //GIVEN
+        ChoreoDTO choreoDTOToDelete = new ChoreoDTO("1", "Choreo 1", List.of(
+                new Move("1", "Move 1", "", "", "", "", ""),
+                new Move("2", "Move 2", "", "", "", "", ""),
+                new Move("3", "Move 3", "", "", "", "", ""),
+                new Move("2", "Move 2", "", "", "", "", "")));
+
+        Choreo choreo = new Choreo("1", "Choreo 1", List.of("1", "2", "3", "2"));
+        choreoRepo.save(choreo);
+
+        //WHEN
+        choreoService.deleteChoreo(choreoDTOToDelete);
+
+        //THEN
+        verify(choreoRepo).delete(choreo);
+    }
 }

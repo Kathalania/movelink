@@ -54,9 +54,11 @@ public class ChoreoService {
         return choreoRepo.save(existingChoreo);
     }
 
-    public void deleteChoreo(String id){
-        Choreo existingChoreo = choreoRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(String.format(CHOREO_NOT_FOUND_ERROR, id)));
+    public void deleteChoreo(ChoreoDTO choreoToDelete){
+        Choreo existingChoreo = new Choreo(choreoToDelete.id(), choreoToDelete.name(), choreoToDelete.choreoMoves().stream()
+                .map(Move::id)
+                .toList());
+
         choreoRepo.delete(existingChoreo);
     }
 }
