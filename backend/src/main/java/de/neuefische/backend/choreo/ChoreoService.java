@@ -16,9 +16,22 @@ public class ChoreoService {
     private final ChoreoRepo choreoRepo;
     private final MoveService moveService;
 
-    private ChoreoDTO createChoreoDTO(String id) {
-        Choreo choreo = choreoRepo.findById(id).orElseThrow(()
-                -> new NoSuchElementException("Choreo with id " + id + " not found!"));
+
+    /*
+     private ChoreoDTO createChoreoDTO(String id) {
+
+        List<Move> moves = new ArrayList<>();
+
+        for (int i = 0; i < choreo.moveIds().size(); i++) {
+            Move move = moveService.getMoveById(choreo.moveIds().get(i));
+            moves.add(move);
+        }
+        return new ChoreoDTO(choreo.id(), choreo.name(), moves);
+    }
+     */
+    //List<Move> moves = getMovesFromMoveIdList(choreo.moveIds())
+
+    public ChoreoDTO createChoreoDTO(Choreo choreo) {
         List<Move> moves = new ArrayList<>();
 
         for (int i = 0; i < choreo.moveIds().size(); i++) {
@@ -28,7 +41,7 @@ public class ChoreoService {
         return new ChoreoDTO(choreo.id(), choreo.name(), moves);
     }
 
-    public List<ChoreoDTO> getAllChoreos() {
+    public List<ChoreoDTO> getAllChoreoDTOsByAllChoreos() {
         List<Choreo> choreos = choreoRepo.findAll();
         List<ChoreoDTO> choreoDTOList = new ArrayList<>();
 
@@ -39,8 +52,10 @@ public class ChoreoService {
         return choreoDTOList;
     }
 
-    public ChoreoDTO getChoreoById(String id) {
+    public ChoreoDTO getChoreoDTOByChoreoId(String id) {
+        Choreo choreo = choreoRepo.findById(id).orElseThrow(()
+                -> new NoSuchElementException("Choreo with id " + id + " not found!"));
 
-        return createChoreoDTO(id);
+        return createChoreoDTO(choreo);
     }
 }

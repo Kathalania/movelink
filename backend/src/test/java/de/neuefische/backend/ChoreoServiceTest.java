@@ -5,10 +5,11 @@ import de.neuefische.backend.choreo.ChoreoDTO;
 import de.neuefische.backend.choreo.ChoreoRepo;
 import de.neuefische.backend.choreo.ChoreoService;
 import de.neuefische.backend.move.Move;
-import de.neuefische.backend.move.MoveInterface;
 import de.neuefische.backend.move.MoveService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -22,85 +23,97 @@ import static org.mockito.Mockito.*;
 class ChoreoServiceTest {
 
     private ChoreoRepo choreoRepo;
-    private MoveInterface moveInterface;
+    private MoveService moveService;
     private ChoreoService choreoService;
 
     @BeforeEach
     public void setUp() {
         choreoRepo = mock(ChoreoRepo.class);
-        moveInterface = mock(MoveInterface.class);
-        MoveService moveService = new MoveService(moveInterface);
+        moveService = mock(MoveService.class);
         choreoService = new ChoreoService(choreoRepo, moveService);
     }
 
     @DirtiesContext
     @Test
     void getAllChoreos_ShouldReturnListOfAllChoreos() {
-        // GIVEN
-        Move move1 = new Move("1", "Move 1", "description", "Lindy Hop", "6", "open", "open");
-        Move move2 = new Move("2", "Move 2", "description", "Lindy Hop", "4", "open", "open");
-        Move move3 = new Move("3", "Move 3", "description", "Lindy Hop", "8", "open", "open");
-        List<Move> choreoMoves = List.of(move1, move2, move3);
-
+        //GIVEN
         Choreo choreo1 = new Choreo("1", "Choreo 1", List.of("1", "2", "3"));
         Choreo choreo2 = new Choreo("2", "Choreo 2", List.of("1", "2", "3", "2", "1"));
         List<Choreo> expectedChoreos = Arrays.asList(choreo1, choreo2);
 
         when(choreoRepo.findAll()).thenReturn(expectedChoreos);
+        when(choreoRepo.findById("1")).thenReturn(Optional.of(choreo1));
+        when(choreoRepo.findById("2")).thenReturn(Optional.of(choreo2));
 
         // WHEN
-        List<ChoreoDTO> actualChoreos = choreoService.getAllChoreos();
+        List<ChoreoDTO> actualChoreos = choreoService.getAllChoreoDTOsByAllChoreos();
 
         // THEN
         verify(choreoRepo, times(1)).findAll();
-        assertEquals(1, actualChoreos.size());
+        assertEquals(expectedChoreos.size(), actualChoreos.size());
     }
 
     @DirtiesContext
     @Test
-    void getChoreoById_ShouldReturnChoreoWithMoves() {
+    void getChoreoById_ShouldReturnChoreoDTO_WhenChoreoExists() {
         // GIVEN
         String choreoId = "1";
-        Choreo expectedChoreo = new Choreo(choreoId, "Choreo 1", List.of("1", "2", "3"));
-        when(choreoRepo.findById(choreoId)).thenReturn(Optional.of(expectedChoreo));
+        Choreo choreo = new Choreo(choreoId, "Choreo 1", List.of("1", "2", "3"));
 
-        List<Move> expectedMoves = new ArrayList<>();
-        expectedMoves.add(new Move("1", "Move 1", "description", "Lindy Hop", "6", "open", "open"));
-        expectedMoves.add(new Move("2", "Move 2", "description", "Lindy Hop", "4", "open", "open"));
-        expectedMoves.add(new Move("3", "Move 3", "description", "Lindy Hop", "8", "open", "open"));
+        Move move1 = new Move("1", "Move 1", "Description 1", "Style 1", "", "", "");
+        Move move2 = new Move("2", "Move 2", "Description 2", "Style 2", "", "", "");
+        Move move3 = new Move("3", "Move 3", "Description 3", "Style 3", "", "", "");
 
-        when(moveInterface.findById("1")).thenReturn(Optional.of(new Move("1", "Move 1", "description", "Lindy Hop", "6", "open", "open")));
-        when(moveInterface.findById("2")).thenReturn(Optional.of(new Move("2", "Move 2", "description", "Lindy Hop", "4", "open", "open")));
-        when(moveInterface.findById("3")).thenReturn(Optional.of(new Move("3", "Move 3", "description", "Lindy Hop", "8", "open", "open")));
+        when(choreoRepo.findById(choreoId)).thenReturn(Optional.of(choreo));
+        when(moveService.getMoveById("1")).thenReturn(move1);
+        when(moveService.getMoveById("2")).thenReturn(move2);
+        when(moveService.getMoveById("3")).thenReturn(move3);
+
+        ChoreoDTO expectedChoreoDTO = new ChoreoDTO(choreoId, "Choreo 1", List.of(move1, move2, move3));
 
         // WHEN
-        ChoreoDTO actualChoreoDTO = choreoService.getChoreoById(choreoId);
+        ChoreoDTO actualChoreoDTO = choreoService.getChoreoDTOByChoreoId(choreoId);
 
         // THEN
         verify(choreoRepo, times(1)).findById(choreoId);
-        assertEquals(expectedChoreo.id(), actualChoreoDTO.id());
-        assertEquals(expectedChoreo.name(), actualChoreoDTO.name());
-        assertEquals(expectedMoves, actualChoreoDTO.choreoMoves());
+        verify(moveService, times(3)).getMoveById(Mockito.anyString());
+        assertEquals(expectedChoreoDTO, actualChoreoDTO);
+    }
+
+    @Test
+    void getChoreoById_ShouldThrowNoSuchElementException_WhenChoreoDoesNotExist() {
+        // GIVEN
+        String choreoId = "1";
+
+        when(choreoRepo.findById(choreoId)).thenReturn(Optional.empty());
+
+        // WHEN / THEN
+        assertThrows(NoSuchElementException.class, () -> choreoService.getChoreoDTOByChoreoId(choreoId));
+        verify(choreoRepo, times(1)).findById(choreoId);
+        verify(moveService, never()).getMoveById(Mockito.anyString());
     }
 
     @DirtiesContext
     @Test
-    void getChoreoById_WithInvalidId_ShouldThrowNoSuchElementException() {
+    void testCreateChoreoDTO() {
         // GIVEN
-        String choreoId = "1";
-        when(choreoRepo.findById(choreoId)).thenReturn(Optional.empty());
+        List<String> moveIds = List.of("1", "2");
+        Choreo choreo = new Choreo("13", "Choreo 13", moveIds);
 
-        // WHEN / THEN
-        NoSuchElementException exception = assertThrows(
-                NoSuchElementException.class,
-                () -> choreoService.getChoreoById(choreoId)
+        List<Move> expectedMoves = List.of(
+                new Move("1", "move 1", "Description 1", "Style 1", "", "", ""),
+                new Move("2", "move 2", "Description 2", "Style 2", "", "", "")
         );
-        assertEquals("Choreo with id " + choreoId + " not found!", exception.getMessage());
-        verify(choreoRepo, times(1)).findById(choreoId);
+
+        Mockito.when(moveService.getMoveById("1")).thenReturn(new Move("1", "move 1", "Description 1", "Style 1", "", "", ""));
+        Mockito.when(moveService.getMoveById("2")).thenReturn(new Move("2", "move 2", "Description 2", "Style 2", "", "", ""));
+
+        // WHEN
+        ChoreoDTO result = choreoService.createChoreoDTO(choreo);
+
+        // THEN
+        Assertions.assertEquals(choreo.id(), result.id());
+        Assertions.assertEquals(choreo.name(), result.name());
+        Assertions.assertEquals(expectedMoves, result.choreoMoves());
     }
 }
-
-
-
-
-
