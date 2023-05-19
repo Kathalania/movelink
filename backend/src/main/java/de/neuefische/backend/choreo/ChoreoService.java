@@ -34,8 +34,8 @@ public class ChoreoService {
     public ChoreoDTO createChoreoDTO(Choreo choreo) {
         List<Move> moves = new ArrayList<>();
 
-        for (int i = 0; i < choreo.moveIds().size(); i++) {
-            Move move = moveService.getMoveById(choreo.moveIds().get(i));
+        for (String moveId : choreo.moveIds()) {
+            Move move = moveService.getMoveById(moveId);
             moves.add(move);
         }
         return new ChoreoDTO(choreo.id(), choreo.name(), moves);
@@ -46,7 +46,7 @@ public class ChoreoService {
         List<ChoreoDTO> choreoDTOList = new ArrayList<>();
 
         for (Choreo choreo : choreos) {
-            ChoreoDTO choreoDTO = createChoreoDTO(choreo.id());
+            ChoreoDTO choreoDTO = createChoreoDTO(choreo);
             choreoDTOList.add(choreoDTO);
         }
         return choreoDTOList;
