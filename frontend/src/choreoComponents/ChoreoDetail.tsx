@@ -19,7 +19,8 @@ export default function ChoreoDetail() {
     return (
         <div className="choreo-detail">
             {choreo ? (
-                <Container maxWidth='md'>
+                <div>
+                    <Container maxWidth='md'>
                     <h2>{choreo.name.toUpperCase()}</h2>
                     {choreo.choreoMoves.map((move) =>
                         (<Card className='choreo-move' style={{
@@ -51,6 +52,10 @@ export default function ChoreoDetail() {
                         ))
                     }
                 </Container>
+                <Button id="deleteBtn" type="submit" variant="outlined" color="error" startIcon={<DeleteIcon/>}
+                >delete Choreo
+                </Button>
+                </div>
             ) : (
             <Box sx={{display: 'flex'}}>
                 <CircularProgress/>
