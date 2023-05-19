@@ -1,0 +1,11 @@
+#galleryBtn {
+    background-color: dimgray;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+    color: lightgrey;
+}
+
+#deleteBtn {
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}

@@ -8,6 +8,7 @@ import {ToastContainer} from "react-toastify";
 import DetailRouting from "./components/DetailRouting";
 import ChoreoGallery from "./choreoComponents/ChoreoGallery";
 import useChoreos from "./hooks/useChoreos";
+import ChoreoDetail from "./choreoComponents/ChoreoDetail";
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
                            element={<DetailRouting editMove={editMove} deleteMove={deleteMove}/>}/>
                     <Route path="/choreos/*"
                            element={<ChoreoGallery moves={moves} choreos={choreos}/>}/>
+                    <Route path="/choreo/:id"
+                           element={<ChoreoDetail/>}/>
                 </Routes>
         </div>
     );
