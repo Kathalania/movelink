@@ -16,21 +16,6 @@ public class ChoreoService {
     private final ChoreoRepo choreoRepo;
     private final MoveService moveService;
 
-
-    /*
-     private ChoreoDTO createChoreoDTO(String id) {
-
-        List<Move> moves = new ArrayList<>();
-
-        for (int i = 0; i < choreo.moveIds().size(); i++) {
-            Move move = moveService.getMoveById(choreo.moveIds().get(i));
-            moves.add(move);
-        }
-        return new ChoreoDTO(choreo.id(), choreo.name(), moves);
-    }
-     */
-    //List<Move> moves = getMovesFromMoveIdList(choreo.moveIds())
-
     public ChoreoDTO createChoreoDTO(Choreo choreo) {
         List<Move> moves = new ArrayList<>();
 
