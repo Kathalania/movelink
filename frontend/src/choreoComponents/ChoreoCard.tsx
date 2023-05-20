@@ -16,7 +16,8 @@ export default function ChoreoCard(props: ChoreoProps) {
             <Box sx={{ boxShadow: 5, width: 500, mb: 2, padding: 1}}>
                 <h2>{props.choreo.name.toUpperCase()}</h2>
                 {props.choreo.choreoMoves.map((move) =>
-                    (<Card className='choreo-move' style={{backgroundColor: "#1B1E24",
+                    (<Card key={move.id}
+                           className='choreo-move' style={{backgroundColor: "#1B1E24",
                             color: "lightgrey",
                             justifyContent: "start",
                             margin: 2}}>

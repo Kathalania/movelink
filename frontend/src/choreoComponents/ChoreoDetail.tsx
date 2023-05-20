@@ -111,13 +111,12 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                 }}
                             />
                             {props.choreo.choreoMoves.map((move) =>
-                                <Card className="choreo-move"
+                                <Card key={move.id} className="choreo-move"
                                       sx={{backgroundColor: "#1B1E24", color: "lightgrey", margin: 2}}>
                                     <CardContent>
                                         <Grid container spacing={2}>
                                             <Grid item xs={12} md={4}>
                                                 {/* Video column */}
-                                                {/* Hier kann das Video hinzugefügt werden */}
                                             </Grid>
                                             <Grid item xs={12} md={4}>
                                                 {/* Text column */}
