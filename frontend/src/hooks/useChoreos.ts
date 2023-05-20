@@ -24,7 +24,7 @@ export default function useChoreos() {
     }
 
     function editChoreo (choreo: Choreo) {
-        return axios.put('api/choreo/${choreo.id}/edit', choreo)
+        return axios.put(`/api/moves/${choreo.id}/edit`, choreo)
             .then((putChoreoResponse)=> {
             setChoreos(choreos.map(choreoToEdit => {
                 if (choreoToEdit.id === choreo.id) {
@@ -39,7 +39,7 @@ export default function useChoreos() {
     }
 
     function deleteChoreo (id: string) {
-        axios.delete("/api/choreo/" + id)
+        axios.delete(`/api/choreo/`+ id)
             .then(() => {
                 setChoreos(choreos.filter((choreo) => choreo.id !== id))
                 toast.success("Choreo deleted")

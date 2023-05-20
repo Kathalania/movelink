@@ -10,11 +10,13 @@ import ChoreoGallery from "./choreoComponents/ChoreoGallery";
 import useChoreos from "./hooks/useChoreos";
 import ChoreoDetail from "./choreoComponents/ChoreoDetail";
 import React from "react";
+import useDetailChoreo from "./hooks/useDetailChoreo";
 
 function App() {
 
     const {addMove, deleteMove, moves, editMove} = useMoves()
-    const { choreos, deleteChoreo } = useChoreos()
+    const {choreos, deleteChoreo} = useChoreos()
+    const {choreo, setChoreo, editChoreo} = useDetailChoreo()
 
     return (
         <div className="App">
@@ -30,7 +32,11 @@ function App() {
                     <Route path="/choreos/*"
                            element={<ChoreoGallery moves={moves} choreos={choreos}/>}/>
                     <Route path="/choreo/:id"
-                           element={<ChoreoDetail deleteChoreo={deleteChoreo}/>}/>
+                           element={<ChoreoDetail
+                               choreo={choreo}
+                               setChoreo={setChoreo}
+                               editChoreo={editChoreo}
+                               deleteChoreo={deleteChoreo}/>}/>
                 </Routes>
         </div>
     );
