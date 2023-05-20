@@ -20,7 +20,6 @@ export default function useDetail() {
         axios.get("/api/moves/" + id)
             .then((response) => {
                 setMove(response.data)
-                //setEditedMove(response.data)
             })
             .catch(() => {
                 toast.error("Move does not exist")

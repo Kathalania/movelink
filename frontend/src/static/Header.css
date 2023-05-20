@@ -1,0 +1,51 @@
+.Header {
+    background-color: lightgrey;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+.HeaderContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    background-color: #1B1E24;
+    height: 6rem;
+    padding-left: 1.2rem;
+    padding-right: 2rem;
+    box-shadow:0 0 0.5rem #1B1E24;
+}
+
+h1 {
+    font-weight: 300;
+    font-size: calc(1.3rem + 1.5vw);
+    color: lightgrey;
+}
+
+h2 {
+    font-weight: 20;
+    font-size: calc(0.4rem + 1vw);
+    color: lightgrey;
+}
+
+.App-logo {
+    height: 4rem;
+    display: flex;
+    justify-content: start;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
