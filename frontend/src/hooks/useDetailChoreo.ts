@@ -13,7 +13,7 @@ export default function useDetailChoreo(){
         if (id) {
             loadChoreoById(id)
         }
-    }, [])
+    }, [id])
 
     function loadChoreoById(id: string){
         axios.get("/api/choreo/" + id)
