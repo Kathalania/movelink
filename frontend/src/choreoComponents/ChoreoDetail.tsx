@@ -26,7 +26,7 @@ export default function ChoreoDetail() {
                         (<Card className='choreo-move' style={{
                                 backgroundColor: "#1B1E24",
                                 color: "lightgrey",
-                                justifyContent: "start",
+                                justifyContent: "flex-start",
                                 margin: 2
                             }}>
                                 <CardContent>

@@ -18,7 +18,7 @@ export default function ChoreoCard(props: ChoreoProps) {
                 {props.choreo.choreoMoves.map((move) =>
                     (<Card className='choreo-move' style={{backgroundColor: "#1B1E24",
                             color: "lightgrey",
-                            justifyContent: "start",
+                            justifyContent: "flex-start",
                             margin: 2}}>
                             <CardContent>
                                 <Typography gutterBottom variant="h6" component="div">
