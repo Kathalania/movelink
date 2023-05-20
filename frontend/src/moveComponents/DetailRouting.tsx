@@ -4,6 +4,7 @@ import EditMove from "./EditMove";
 import useDetail from "../hooks/useDetail";
 import React from "react";
 import {Move} from "../models/Move";
+import {Box, CircularProgress} from "@mui/material";
 
 type DetailRoutingProps = {
     deleteMove: (id: string) => void
@@ -13,10 +14,13 @@ export default function DetailRouting(props: DetailRoutingProps) {
 
     const {move, setMove} = useDetail()
 
-    if (move === undefined){
-        return <p>Loading...</p>
+    if (move === undefined) {
+        return (
+            <Box sx={{display: 'flex'}}>
+                <CircularProgress/>
+            </Box>
+        )
     }
-
 
 
     return (

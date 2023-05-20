@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 export default function useDetail() {
 
     const [move, setMove] = useState<Move>()
-
     const params = useParams<{ id: string }>()
+
     useEffect(() => {
         if (params.id) {
             loadMoveById(params.id)
