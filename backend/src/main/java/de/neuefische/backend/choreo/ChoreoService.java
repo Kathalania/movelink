@@ -43,4 +43,15 @@ public class ChoreoService {
 
         return createChoreoDTO(choreo);
     }
+
+    public Choreo addChoreoByChoreoDTO(ChoreoDTO choreoDTO){
+        List<String> moveIds = new ArrayList<>(choreoDTO.choreoMoves().size());
+        for (Move move : choreoDTO.choreoMoves()) {
+            moveIds.add(move.id());
+        }
+        Choreo choreoFromDTO = new Choreo(choreoDTO.id(), choreoDTO.name(), moveIds);
+
+        return choreoRepo.save(choreoFromDTO);
+    }
 }
+
