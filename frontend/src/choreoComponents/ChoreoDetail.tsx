@@ -22,16 +22,25 @@ import {Move} from "../models/Move";
 
 type ChoreoDetailProps = {
     deleteChoreo: (id: string) => void
-    choreo: Choreo
+    choreo: Choreo | undefined
     editChoreo: (choreo: Choreo) => Promise<Choreo>
     setChoreo: React.Dispatch<Choreo>
 }
 
 export default function ChoreoDetail(props: ChoreoDetailProps) {
 
+    if (props.choreo === undefined) {
+        return (
+            <Box sx={{display: 'flex'}}>
+                <CircularProgress/>
+            </Box>
+        )
+    }
+
     const navigate = useNavigate();
     const [editedChoreo, setEditedChoreo] = useState<Choreo>(props.choreo)
     const {loadChoreoById} = useDetailChoreo()
+
 
     function deleteChoreoOnClick() {
             if (props.choreo) {
@@ -58,7 +67,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
         const updatedMoves = choreo.choreoMoves.filter((move: Move) => move.id !== moveId);
         const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves};
         props.setChoreo(updatedChoreo);
-        loadChoreoById(props.choreo.id)
+        loadChoreoById(updatedChoreo.id)
         return updatedChoreo;
     }
 
@@ -70,7 +79,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             const updatedMoves = [...choreo.choreoMoves, duplicatedMove];
             const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves};
             props.setChoreo(updatedChoreo);
-            loadChoreoById(props.choreo.id)
+            loadChoreoById(updatedChoreo.id)
             return updatedChoreo;
         }
 
