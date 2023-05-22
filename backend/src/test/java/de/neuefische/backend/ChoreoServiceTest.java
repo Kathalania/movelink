@@ -116,4 +116,35 @@ class ChoreoServiceTest {
         Assertions.assertEquals(choreo.name(), result.name());
         Assertions.assertEquals(expectedMoves, result.choreoMoves());
     }
+
+    @DirtiesContext
+    @Test
+    void testAddChoreoDTO() {
+        // GIVEN
+        List<Move> choreoMoves = new ArrayList<>();
+        choreoMoves.add(new Move("3", "Move 3", "", "Charleston", "4", "open", "closed"));
+        choreoMoves.add(new Move("1", "Move 1", "", "Lindy Hop", "8", "open", "open"));
+        choreoMoves.add(new Move("3", "Move 3", "", "Charleston", "4", "open", "closed"));
+
+        List<String> moveIds = new ArrayList<>();
+        moveIds.add("3");
+        moveIds.add("1");
+        moveIds.add("3");
+
+        ChoreoDTO choreoDTO = new ChoreoDTO("2", "Choreo 2", choreoMoves);
+        Choreo expectedChoreo = new Choreo(choreoDTO.id(), choreoDTO.name(), moveIds);
+
+        when(choreoRepo.save(expectedChoreo)).thenReturn(expectedChoreo);
+
+        // WHEN
+        Choreo actualChoreo = choreoService.addChoreoByChoreoDTO(choreoDTO);
+
+        // THEN
+        verify(choreoRepo, times(1)).save(actualChoreo);
+        assertEquals(expectedChoreo.id(), actualChoreo.id());
+        assertEquals(expectedChoreo.name(), actualChoreo.name());
+        assertEquals(expectedChoreo, actualChoreo);
+    }
+
+
 }
