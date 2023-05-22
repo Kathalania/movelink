@@ -25,8 +25,5 @@ export default function useDetailChoreo(){
             })
     }
 
-
-
-
-    return {choreo, setChoreo, loadChoreoById}
+    return {choreo, setChoreo}
 }

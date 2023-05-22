@@ -10,15 +10,11 @@ import ChoreoGallery from "./choreoComponents/ChoreoGallery";
 import useChoreos from "./hooks/useChoreos";
 import ChoreoDetail from "./choreoComponents/ChoreoDetail";
 import React from "react";
-import useDetailChoreo from "./hooks/useDetailChoreo";
-import {Box, CircularProgress} from "@mui/material";
 
 function App() {
 
     const {addMove, deleteMove, moves, editMove} = useMoves()
     const {choreos, deleteChoreo, editChoreo} = useChoreos()
-    const {choreo, setChoreo} = useDetailChoreo()
-
 
     return (
         <div className="App">
@@ -34,16 +30,10 @@ function App() {
                     <Route path="/choreo"
                            element={<ChoreoGallery moves={moves} choreos={choreos}/>}/>
                     <Route path="/choreo/:id"
-                           element={ choreo ? ( <ChoreoDetail
-                               choreo={choreo}
-                               setChoreo={setChoreo}
+                           element={<ChoreoDetail
                                editChoreo={editChoreo}
                                deleteChoreo={deleteChoreo}
-                           /> ) : (
-                               <Box sx={{display: 'flex'}}>
-                               <CircularProgress/>
-                               </Box>
-                               )}/>
+                           />}/>
                 </Routes>
         </div>
     );

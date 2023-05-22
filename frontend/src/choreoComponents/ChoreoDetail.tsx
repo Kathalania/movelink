@@ -7,7 +7,7 @@ import {
     Container, Grid, IconButton, TextField,
     Typography
 } from "@mui/material";
-import React, {useState} from "react";
+import React from "react";
 import "./ChoreoDetail.css"
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
@@ -22,71 +22,66 @@ import {Move} from "../models/Move";
 
 type ChoreoDetailProps = {
     deleteChoreo: (id: string) => void
-    choreo: Choreo
     editChoreo: (choreo: Choreo) => Promise<Choreo>
-    setChoreo: React.Dispatch<Choreo>
 }
 
 export default function ChoreoDetail(props: ChoreoDetailProps) {
 
+    const {choreo, setChoreo} = useDetailChoreo()
     const navigate = useNavigate()
-    console.log(navigate)
-    const [editedChoreo, setEditedChoreo] = useState<Choreo>(props.choreo)
-    const {loadChoreoById} = useDetailChoreo()
-
 
     function deleteChoreoOnClick() {
-            if (props.choreo) {
-                props.deleteChoreo(props.choreo.id);
+            if (choreo) {
+                props.deleteChoreo(choreo.id);
             }
             navigate("/choreo");
         }
-    /*
-        function deleteMoveOnClick(moveId: string) {
-            if (props.choreo) {
-                deleteMoveFromChoreo(props.choreo, moveId)
-            }
-        }*/
 
     function choreoInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const {name, value} = event.target
-        setEditedChoreo((prevChoreo) => ({
-            ...prevChoreo,
-            [name]: value
-        }))
+        if (choreo) {
+            const {name, value} = event.target
+            setChoreo({
+                ...choreo,
+                [name]: value
+            })
+        }
     }
 
-    function deleteMoveFromChoreo(choreo: Choreo, moveId: string): Choreo {
-        const updatedMoves = choreo.choreoMoves.filter((move: Move) => move.id !== moveId);
-        const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves};
-        props.setChoreo(updatedChoreo);
-        loadChoreoById(updatedChoreo.id)
-        return updatedChoreo;
+    function deleteMoveFromChoreo(moveId: string, index: number): void {
+        if (choreo) {
+            const updatedMoves = choreo.choreoMoves.filter(
+                (move: Move, moveIndex: number) => moveIndex !== index
+            );
+            const updatedChoreo: Choreo = { ...choreo, choreoMoves: updatedMoves }
+            setChoreo(updatedChoreo)
+        }
     }
 
     function duplicateMoveInChoreo(choreo: Choreo, moveId: string): Choreo {
-        const moveToDuplicate = choreo.choreoMoves.find((move) => move.id === moveId);
+        const moveToDuplicate = choreo.choreoMoves.find((move) => move.id === moveId)
 
         if (moveToDuplicate) {
-            const duplicatedMove = {...moveToDuplicate};
-            const updatedMoves = [...choreo.choreoMoves, duplicatedMove];
-            const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves};
-            props.setChoreo(updatedChoreo);
-            loadChoreoById(updatedChoreo.id)
-            return updatedChoreo;
+            const duplicatedMove = {...moveToDuplicate}
+            const updatedMoves = [...choreo.choreoMoves, duplicatedMove]
+            const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves}
+            setChoreo(updatedChoreo)
+            return updatedChoreo
         }
 
-        return choreo;
+        return choreo
     }
 
 
     async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        try {
-            const updatedChoreo = await props.editChoreo(editedChoreo)
-            props.setChoreo(updatedChoreo)
+        try { if (choreo){
+            const updatedChoreo = await props.editChoreo(choreo)
+            setChoreo(updatedChoreo)
             console.log("put successful")
             toast.success("Choreo updated")
+            navigate("/choreo/" + choreo.id)
+            window.location.reload()
+        }
         } catch (error) {
             console.error(error)
             toast.error("Failed to update choreo")
@@ -97,7 +92,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
 
     return (
         <div className="choreo-detail">
-            {props.choreo ? (
+            {choreo ? (
                 <div>
                     <Container maxWidth="md">
                         <form onSubmit={handleFormSubmit}>
@@ -105,7 +100,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                 sx={{marginTop: 2}}
                                 label="Choreo Name"
                                 name="name"
-                                value={editedChoreo.name}
+                                value={choreo.name}
                                 onChange={choreoInputChange}
                                 InputLabelProps={{sx: {color: "lightgrey"}}}
                                 InputProps={{
@@ -114,16 +109,15 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                     }
                                 }}
                             />
-                            {props.choreo.choreoMoves.map((move) =>
-                                <Card key={move.id} className="choreo-move"
+                            {choreo.choreoMoves && choreo.choreoMoves.map((move, index) =>
+                                <Card key={`${move.id}-${index}`} className="choreo-move"
                                       sx={{backgroundColor: "#1B1E24", color: "lightgrey", margin: 2}}>
                                     <CardContent>
                                         <Grid container spacing={2}>
-                                            <Grid item xs={12} md={4}>
+                                            <Grid item xs={6} md={4}>
                                                 {/* Video column */}
                                             </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                {/* Text column */}
+                                            <Grid item xs={4} md={4}>
                                                 <Typography gutterBottom variant="h6" component="div">
                                                     {move.name}
                                                 </Typography>
@@ -140,7 +134,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                     {move.end}
                                                 </Typography>
                                             </Grid>
-                                            <Grid item xs={12} md={4}>
+                                            <Grid item xs={4} md={4}>
                                                 <Box sx={{
                                                     marginTop: 2,
                                                     display: 'flex',
@@ -153,7 +147,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                         color="error"
                                                         title="remove"
                                                         onClick={() => {
-                                                            deleteMoveFromChoreo(props.choreo, move.id)
+                                                            deleteMoveFromChoreo(move.id, index)
                                                         }
                                                     }>
                                                         <RemoveCircleOutlineIcon/>
@@ -163,7 +157,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                         color="success"
                                                         title="duplicate"
                                                         onClick={() => {
-                                                            duplicateMoveInChoreo(props.choreo, move.id)
+                                                            duplicateMoveInChoreo(choreo, move.id)
                                                         }
                                                         }>
                                                         <AddCircleOutlineIcon/>
