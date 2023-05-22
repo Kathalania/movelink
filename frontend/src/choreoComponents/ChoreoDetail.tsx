@@ -22,20 +22,12 @@ import {Move} from "../models/Move";
 
 type ChoreoDetailProps = {
     deleteChoreo: (id: string) => void
-    choreo: Choreo | undefined
+    choreo: Choreo
     editChoreo: (choreo: Choreo) => Promise<Choreo>
     setChoreo: React.Dispatch<Choreo>
 }
 
 export default function ChoreoDetail(props: ChoreoDetailProps) {
-
-    if (props.choreo === undefined) {
-        return (
-            <Box sx={{display: 'flex'}}>
-                <CircularProgress/>
-            </Box>
-        )
-    }
 
     const navigate = useNavigate();
     const [editedChoreo, setEditedChoreo] = useState<Choreo>(props.choreo)
@@ -99,6 +91,8 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             toast.error("Failed to update choreo")
         }
     }
+
+
 
     return (
         <div className="choreo-detail">
