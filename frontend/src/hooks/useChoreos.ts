@@ -1,11 +1,20 @@
 import {useEffect, useState} from "react";
-import {Choreo} from "../models/Choreo";
+import {Choreo, NewChoreo} from "../models/Choreo";
 import axios from "axios";
 
 export default function useChoreos() {
+
     const [choreos, setChoreos] = useState<Choreo[]>([])
 
-    useEffect(() => {loadAllChoreos()}, [])
+    useEffect(() => {
+        loadAllChoreos()
+    }, [])
+
+    function addChoreo(newChoreo: NewChoreo) {
+        axios.post("/api/choreo/add", newChoreo)
+            .then(() => loadAllChoreos())
+            .catch(() => console.error("Your post was not successful!"))
+    }
 
     function loadAllChoreos(){
         axios.get("/api/choreo")
@@ -17,5 +26,5 @@ export default function useChoreos() {
             })
     }
 
-    return {choreos}
+    return {choreos, addChoreo}
 }
