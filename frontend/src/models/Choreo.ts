@@ -5,3 +5,8 @@ export type Choreo = {
     name: string,
     choreoMoves: Move[]
 }
+
+export type NewChoreo = {
+    name: string,
+    choreoMoves: Move[]
+}
