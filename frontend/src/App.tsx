@@ -31,7 +31,7 @@ function App() {
                     element={<MoveGallery moves={moves}/>}/>
                     <Route path="/moves/:id/*"
                            element={<DetailRouting editMove={editMove} deleteMove={deleteMove}/>}/>
-                    <Route path="/choreos/*"
+                    <Route path="/choreo"
                            element={<ChoreoGallery moves={moves} choreos={choreos}/>}/>
                     <Route path="/choreo/:id"
                            element={ choreo ? ( <ChoreoDetail

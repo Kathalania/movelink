@@ -23,7 +23,7 @@ export default function NavigationBar() {
                 >
                     <Tab label="Create move" onClick={() => {navigate("/addMove")}} />
                     <Tab label="All moves" onClick={() => {navigate("/moves")}} />
-                    <Tab label="All choreos" onClick={() => {navigate("/choreos")}} />
+                    <Tab label="All choreos" onClick={() => {navigate("/choreo")}} />
                     <Tab label="My choreo" onClick={() => {navigate("/choreo")}} />
                 </Tabs>
             </Box>

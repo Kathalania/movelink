@@ -29,7 +29,8 @@ type ChoreoDetailProps = {
 
 export default function ChoreoDetail(props: ChoreoDetailProps) {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    console.log(navigate)
     const [editedChoreo, setEditedChoreo] = useState<Choreo>(props.choreo)
     const {loadChoreoById} = useDetailChoreo()
 
@@ -38,7 +39,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             if (props.choreo) {
                 props.deleteChoreo(props.choreo.id);
             }
-            navigate("/choreos");
+            navigate("/choreo");
         }
     /*
         function deleteMoveOnClick(moveId: string) {
@@ -180,7 +181,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                         type="button"
                                         variant="contained"
                                         onClick={() => {
-                                            navigate("/choreos")
+                                            navigate("/choreo")
                                         }}
                                         startIcon={<ArrowBackIcon/>}>
                                         Back to gallery
