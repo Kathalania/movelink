@@ -50,7 +50,6 @@ public class ChoreoService {
         Choreo existingChoreo = new Choreo(choreoToEdit.id(), choreoToEdit.name(), choreoToEdit.choreoMoves().stream()
                 .map(Move::id)
                 .toList());
-
         return choreoRepo.save(existingChoreo);
     }
 

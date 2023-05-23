@@ -151,7 +151,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                     <Container maxWidth="md">
                         <form onSubmit={handleFormSubmit}>
                             <TextField
-                                sx={{marginTop: 2}}
+                                sx={{marginTop: 4}}
                                 label="Choreo Name"
                                 name="name"
                                 value={choreo.name}
@@ -160,18 +160,14 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                 InputProps={{
                                     style: {
                                         color: "lightgrey",
+                                        fontWeight: "bold"
                                     }
                                 }}
                             />
                             {choreo.choreoMoves && choreo.choreoMoves.map((move, index) =>
                                 <Card key={`${move.id}-${index}`} className="choreo-move"
                                       sx={{backgroundColor: "#1B1E24", color: "lightgrey", margin: 2}}>
-                                    <CardContent>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={8} md={4}>
-                                                {/* Video column */}
-                                            </Grid>
-                                            <Grid item xs={4} md={4}>
+                                    <CardContent sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                                                 <Typography gutterBottom variant="h6" component="div">
                                                     {move.name}
                                                 </Typography>
@@ -187,8 +183,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                 <Typography variant="body1" color="lightgrey">
                                                     {move.end}
                                                 </Typography>
-                                            </Grid>
-                                                <Box >
+                                                <Box display="flex" justifyContent="flex-end">
                                                     <IconButton
                                                         color="error"
                                                         title="remove"
@@ -219,7 +214,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                         <ArrowDownwardIcon />
                                                     </IconButton>
                                                 </Box>
-                                        </Grid>
+
                                     </CardContent>
                                 </Card>
                             )}
