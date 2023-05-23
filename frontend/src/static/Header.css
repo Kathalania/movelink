@@ -32,7 +32,7 @@ h2 {
 .App-logo {
     height: 4rem;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 @media (prefers-reduced-motion: no-preference) {

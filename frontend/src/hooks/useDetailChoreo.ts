@@ -6,7 +6,8 @@ import {toast} from "react-toastify";
 
 export default function useDetailChoreo(){
 
-    const [choreo, setChoreo] = useState<Choreo>()
+    const initialState: Choreo = {id:"", name: "", choreoMoves: []}
+    const [choreo, setChoreo] = useState<Choreo>(initialState)
     const {id} = useParams<{ id: string }>()
 
     useEffect(() => {
