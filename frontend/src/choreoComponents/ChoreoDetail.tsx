@@ -21,6 +21,8 @@ import {Choreo} from "../models/Choreo";
 import {toast} from "react-toastify";
 import {Move} from "../models/Move";
 import ChoreoMoveGallery from "./ChoreoMoveGallery";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 type ChoreoDetailProps = {
     deleteChoreo: (id: string) => void
@@ -94,7 +96,35 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
         return choreo
 
     }
+    function onMoveUp(moveId: string, index: number) {
+        if (choreo) {
+            const moveIndex = choreo.choreoMoves.findIndex((move, i) =>
+                `${move.id}-${i}` === `${moveId}-${index}`)
+            if (moveIndex > 0) {
+                const updatedMoves = [...choreo.choreoMoves]
+                const temp = updatedMoves[moveIndex - 1]
+                updatedMoves[moveIndex - 1] = updatedMoves[moveIndex]
+                updatedMoves[moveIndex] = temp
+                const updatedChoreo: Choreo = { ...choreo, choreoMoves: updatedMoves }
+                setChoreo(updatedChoreo)
+            }
+        }
+    }
 
+    function onMoveDown(moveId: string, index: number) {
+        if (choreo) {
+            const moveIndex = choreo.choreoMoves.findIndex((move, i) =>
+                `${move.id}-${i}` === `${moveId}-${index}`)
+            if (moveIndex < choreo.choreoMoves.length - 1) {
+                const updatedMoves = [...choreo.choreoMoves]
+                const temp = updatedMoves[moveIndex + 1]
+                updatedMoves[moveIndex + 1] = updatedMoves[moveIndex]
+                updatedMoves[moveIndex] = temp
+                const updatedChoreo: Choreo = { ...choreo, choreoMoves: updatedMoves }
+                setChoreo(updatedChoreo)
+            }
+        }
+    }
 
     async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -138,7 +168,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                       sx={{backgroundColor: "#1B1E24", color: "lightgrey", margin: 2}}>
                                     <CardContent>
                                         <Grid container spacing={2}>
-                                            <Grid item xs={6} md={4}>
+                                            <Grid item xs={8} md={4}>
                                                 {/* Video column */}
                                             </Grid>
                                             <Grid item xs={4} md={4}>
@@ -158,16 +188,8 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                     {move.end}
                                                 </Typography>
                                             </Grid>
-                                            <Grid item xs={4} md={4}>
-                                                <Box sx={{
-                                                    marginTop: 2,
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'flex-end'
-                                                }}>
+                                                <Box >
                                                     <IconButton
-                                                        id="deleteBtn"
                                                         color="error"
                                                         title="remove"
                                                         onClick={() => {
@@ -186,8 +208,17 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                                         }>
                                                         <AddCircleOutlineIcon/>
                                                     </IconButton>
+                                                    <IconButton
+                                                        title="up"
+                                                        sx={{color:"lightgrey"}} onClick={() => onMoveUp(move.id, index)}>
+                                                        <ArrowUpwardIcon />
+                                                    </IconButton>
+                                                    <IconButton
+                                                        title="down"
+                                                        sx={{color:"lightgrey"}} onClick={() => onMoveDown(move.id, index)}>
+                                                        <ArrowDownwardIcon />
+                                                    </IconButton>
                                                 </Box>
-                                            </Grid>
                                         </Grid>
                                     </CardContent>
                                 </Card>
@@ -235,13 +266,15 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                         </form>
                     </Container>
                     <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle>Add Move</DialogTitle>
-                        <DialogContent>
+                        <DialogTitle style={{backgroundColor: "lightgrey", color: "#1B1E24"}}>
+                            Click on move to add
+                        </DialogTitle>
+                        <DialogContent style={{backgroundColor: "lightgrey"}}>
                             <DialogContentText>
                                 <ChoreoMoveGallery moves={props.moves} onSelectMove={handleSelectMove}/>
                             </DialogContentText>
                         </DialogContent>
-                        <DialogActions>
+                        <DialogActions style={{backgroundColor: "lightgrey"}}>
                             <Button onClick={handleClose}>Cancel</Button>
                         </DialogActions>
                     </Dialog>
