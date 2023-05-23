@@ -33,6 +33,7 @@ function App() {
                            element={<ChoreoDetail
                                editChoreo={editChoreo}
                                deleteChoreo={deleteChoreo}
+                               moves={moves}
                            />}/>
                 </Routes>
         </div>

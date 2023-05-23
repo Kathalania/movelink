@@ -4,10 +4,10 @@ import {
     Card,
     CardContent,
     CircularProgress,
-    Container, Grid, IconButton, TextField,
+    Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, TextField,
     Typography
 } from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import "./ChoreoDetail.css"
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
@@ -16,25 +16,46 @@ import SaveIcon from "@mui/icons-material/Save";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AddIcon from "@mui/icons-material/Add";
 import {Choreo} from "../models/Choreo";
 import {toast} from "react-toastify";
 import {Move} from "../models/Move";
+import ChoreoMoveGallery from "./ChoreoMoveGallery";
 
 type ChoreoDetailProps = {
     deleteChoreo: (id: string) => void
     editChoreo: (choreo: Choreo) => Promise<Choreo>
+    moves: Move[]
 }
 
 export default function ChoreoDetail(props: ChoreoDetailProps) {
 
     const {choreo, setChoreo} = useDetailChoreo()
     const navigate = useNavigate()
+    const [open, setOpen] = useState(false)
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+    function handleSelectMove(move: Move) {
+        if (choreo) {
+            const updatedMoves = [...choreo.choreoMoves, move]
+            const updatedChoreo: Choreo = { ...choreo, choreoMoves: updatedMoves }
+            setChoreo(updatedChoreo)
+            toast.success("Move added to Choreo")
+        }
+    }
 
     function deleteChoreoOnClick() {
             if (choreo) {
-                props.deleteChoreo(choreo.id);
+                props.deleteChoreo(choreo.id)
+                toast.success("Choreo deleted")
             }
-            navigate("/choreo");
+            navigate("/choreo")
         }
 
     function choreoInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -54,6 +75,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             );
             const updatedChoreo: Choreo = { ...choreo, choreoMoves: updatedMoves }
             setChoreo(updatedChoreo)
+            toast.success("Move deleted from choreo")
         }
     }
 
@@ -65,10 +87,12 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             const updatedMoves = [...choreo.choreoMoves, duplicatedMove]
             const updatedChoreo: Choreo = {...choreo, choreoMoves: updatedMoves}
             setChoreo(updatedChoreo)
+            toast.success("Move duplicated")
             return updatedChoreo
         }
 
         return choreo
+
     }
 
 
@@ -80,7 +104,7 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             console.log("put successful")
             toast.success("Choreo updated")
             //navigate("/choreo/" + choreo.id)
-            window.location.reload()
+            //window.location.reload()
         }
         } catch (error) {
             console.error(error)
@@ -182,6 +206,14 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                     </Button>
                                     <Button
                                         id="galleryBtn"
+                                        variant="contained"
+                                        color="success"
+                                        startIcon={<AddIcon/>}
+                                        onClick={handleOpen}>
+                                        Add Move
+                                    </Button>
+                                    <Button
+                                        id="galleryBtn"
                                         type="submit"
                                         variant="contained"
                                         startIcon={<SaveIcon/>}
@@ -202,6 +234,17 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                             </Grid>
                         </form>
                     </Container>
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>Add Move</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                <ChoreoMoveGallery moves={props.moves} onSelectMove={handleSelectMove}/>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
             ) : (
                 <Box sx={{display: "flex"}}>

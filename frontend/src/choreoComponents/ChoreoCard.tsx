@@ -12,6 +12,7 @@ export default function ChoreoCard(props: ChoreoProps) {
     const navigate = useNavigate()
 
     return (
+
         <div className="choreo-card">
             <Box sx={{ boxShadow: 5, width: 500, mb: 2, padding: 1}}>
                 <h3>{props.choreo.name.toUpperCase()}</h3>
