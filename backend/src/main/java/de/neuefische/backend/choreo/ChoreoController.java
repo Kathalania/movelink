@@ -25,7 +25,7 @@ public class ChoreoController {
     }
 
     @PutMapping(path = {"/{id}/edit","{id}"})
-    public Choreo editChoreo(@PathVariable String id, @RequestBody ChoreoDTO choreoToEdit){
+    public ChoreoDTO editChoreo(@PathVariable String id, @RequestBody ChoreoDTO choreoToEdit){
         if (!choreoToEdit.id().equals(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Choreo does not exist");
         }
