@@ -151,7 +151,7 @@ class ChoreoIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(choreoDTOToEdit)))
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(choreo1)));
+                .andExpect(content().json(objectMapper.writeValueAsString(choreoDTOToEdit)));
     }
 
     @DirtiesContext
