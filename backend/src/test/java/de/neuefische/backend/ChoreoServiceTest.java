@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.*;
-
+import static org.bson.assertions.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -115,5 +115,63 @@ class ChoreoServiceTest {
         Assertions.assertEquals(choreo.id(), result.id());
         Assertions.assertEquals(choreo.name(), result.name());
         Assertions.assertEquals(expectedMoves, result.choreoMoves());
+    }
+
+    @DirtiesContext
+    @Test
+    void deleteChoreoById_withChoreoDTOId_shouldReturnSuccessful_Delete() {
+        //GIVEN
+        ChoreoDTO choreoDTOToDelete = new ChoreoDTO("1", "Choreo 1", List.of(
+                new Move("1", "Move 1", "", "", "", "", ""),
+                new Move("2", "Move 2", "", "", "", "", ""),
+                new Move("3", "Move 3", "", "", "", "", ""),
+                new Move("2", "Move 2", "", "", "", "", "")));
+
+        Choreo choreo = new Choreo("1", "Choreo 1", List.of("1", "2", "3", "2"));
+        choreoRepo.save(choreo);
+
+        //WHEN
+        choreoService.deleteChoreo(choreoDTOToDelete);
+
+        //THEN
+        verify(choreoRepo).delete(choreo);
+    }
+
+    @DirtiesContext
+    @Test
+    void editChoreo_ShouldUpdateChoreo_WhenChoreoExists() {
+        // GIVEN
+        Choreo editedChoreo = new Choreo("2", "", List.of("3", "4", "5"));
+        ChoreoDTO choreoDTO = new ChoreoDTO("2", "", List.of(
+                new Move("3", "Updated Move 3", "", "", "", "", ""),
+                new Move("4", "Updated Move 4", "", "", "", "", ""),
+                new Move("5", "Updated Move 5", "", "", "", "", "")
+        ));
+
+        when(choreoRepo.save(editedChoreo)).thenReturn(editedChoreo);
+
+        // WHEN
+        choreoService.editChoreo(choreoDTO);
+
+        // THEN
+        verify(choreoRepo, times(1)).save(editedChoreo);
+        assertEquals("", editedChoreo.name());
+        assertEquals(3, editedChoreo.moveIds().size());
+    }
+
+    @Test
+    void testEditChoreo_ShouldThrowNoSuchElementException_WhenChoreoDoesNotExist() {
+        // GIVEN
+        when(choreoRepo.findById("999")).thenThrow(NoSuchElementException.class);
+
+        //WHEN
+
+        try {
+            choreoService.getChoreoDTOByChoreoId("999");
+            fail();
+        }
+        catch (NoSuchElementException ignored) {
+            verify(choreoRepo).findById("999");
+        }
     }
 }

@@ -1,0 +1,5 @@
+.choreo-move-card {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+}

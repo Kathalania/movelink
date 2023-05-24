@@ -12,7 +12,7 @@ export default function ChoreoGallery(props: ChoreoGalleryProps){
 
     return (
         <Box sx={{ display: 'flex' , justifyContent: 'center', alignItems: 'center', mt: 3}}>
-            <p>{props.choreos.map((char) => <ChoreoCard key={char.id} choreo={char}/>)}</p>
+            {props.choreos.map((char) => <ChoreoCard key={char.id} choreo={char}/>)}
         </Box>
     )
 }

@@ -15,6 +15,7 @@ public class ChoreoService {
 
     private final ChoreoRepo choreoRepo;
     private final MoveService moveService;
+    private static final String CHOREO_NOT_FOUND_ERROR = "Choreo with id %s not found!";
 
     public ChoreoDTO createChoreoDTO(Choreo choreo) {
         List<Move> moves = new ArrayList<>();
@@ -39,8 +40,25 @@ public class ChoreoService {
 
     public ChoreoDTO getChoreoDTOByChoreoId(String id) {
         Choreo choreo = choreoRepo.findById(id).orElseThrow(()
-                -> new NoSuchElementException("Choreo with id " + id + " not found!"));
+                -> new NoSuchElementException(String.format(CHOREO_NOT_FOUND_ERROR, id)));
 
         return createChoreoDTO(choreo);
+    }
+
+
+    public ChoreoDTO editChoreo(ChoreoDTO choreoToEdit) {
+        Choreo existingChoreo = new Choreo(choreoToEdit.id(), choreoToEdit.name(), choreoToEdit.choreoMoves().stream()
+                .map(Move::id)
+                .toList());
+        Choreo updatedChoreo = choreoRepo.save(existingChoreo);
+        return createChoreoDTO(updatedChoreo);
+    }
+
+    public void deleteChoreo(ChoreoDTO choreoToDelete){
+        Choreo existingChoreo = new Choreo(choreoToDelete.id(), choreoToDelete.name(), choreoToDelete.choreoMoves().stream()
+                .map(Move::id)
+                .toList());
+
+        choreoRepo.delete(existingChoreo);
     }
 }
