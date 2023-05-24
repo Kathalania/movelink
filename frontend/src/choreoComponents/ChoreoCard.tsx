@@ -12,22 +12,24 @@ export default function ChoreoCard(props: ChoreoProps) {
     const navigate = useNavigate()
 
     return (
+
         <div className="choreo-card">
-            <Box sx={{ boxShadow: 5, width: 500, mb: 2, padding: 1}}>
-                <h2>{props.choreo.name.toUpperCase()}</h2>
-                {props.choreo.choreoMoves.map((move) =>
-                    (<Card className='choreo-move' style={{backgroundColor: "#1B1E24",
+            <Box component={'div'} sx={{ boxShadow: 5, width: '80vw', mb: 2, padding: 1}}>
+                <h3>{props.choreo.name.toUpperCase()}</h3>
+                {props.choreo.choreoMoves.map((move, index) =>
+                    (<Card key={`${move.id}-${index}`}
+                           className='choreo-move' style={{backgroundColor: "#1B1E24",
                             color: "lightgrey",
                             justifyContent: "flex-start",
                             margin: 2}}>
                             <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
+                                <Typography component={'div'} gutterBottom variant="h6">
                                     {move.name}
                                 </Typography>
-                                <Typography variant="body1" color="lightgrey">
+                                <Typography component={'div'} variant="body1" color="lightgrey">
                                     {move.count} - count
                                 </Typography>
-                                <Typography variant="body1" color="lightgrey">
+                                <Typography component={'div'} variant="body1" color="lightgrey">
                                     {move.style}
                                 </Typography>
                             </CardContent>

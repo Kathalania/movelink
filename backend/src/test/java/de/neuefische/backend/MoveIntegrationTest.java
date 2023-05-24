@@ -214,7 +214,7 @@ class MoveIntegrationTest {
 
     @DirtiesContext
     @Test
-    void editMoveById_shouldReturnBadRequest() throws Exception {
+    void editMoveById_shouldReturnBadRequest_whenIdDoesntMatch() throws Exception {
         mockMvc.perform(put("/api/moves/1234/edit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""

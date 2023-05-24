@@ -44,6 +44,22 @@ public class ChoreoService {
         return createChoreoDTO(choreo);
     }
 
+
+    public Choreo editChoreo(ChoreoDTO choreoToEdit) {
+        Choreo existingChoreo = new Choreo(choreoToEdit.id(), choreoToEdit.name(), choreoToEdit.choreoMoves().stream()
+                .map(Move::id)
+                .toList());
+        return choreoRepo.save(existingChoreo);
+    }
+
+    public void deleteChoreo(ChoreoDTO choreoToDelete){
+        Choreo existingChoreo = new Choreo(choreoToDelete.id(), choreoToDelete.name(), choreoToDelete.choreoMoves().stream()
+                .map(Move::id)
+                .toList());
+
+        choreoRepo.delete(existingChoreo);
+    }
+
     public Choreo addChoreoByChoreoDTO(ChoreoDTO choreoDTO){
         List<String> moveIds = new ArrayList<>(choreoDTO.choreoMoves().size());
         for (Move move : choreoDTO.choreoMoves()) {
@@ -54,4 +70,3 @@ public class ChoreoService {
         return choreoRepo.save(choreoFromDTO);
     }
 }
-
