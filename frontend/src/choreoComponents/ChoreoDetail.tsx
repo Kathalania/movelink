@@ -133,7 +133,6 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
             setChoreo(updatedChoreo)
             console.log("put successful")
             toast.success("Choreo updated")
-            window.location.reload()
         }
         } catch (error) {
             console.error(error)

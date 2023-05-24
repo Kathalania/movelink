@@ -45,11 +45,12 @@ public class ChoreoService {
     }
 
 
-    public Choreo editChoreo(ChoreoDTO choreoToEdit) {
+    public ChoreoDTO editChoreo(ChoreoDTO choreoToEdit) {
         Choreo existingChoreo = new Choreo(choreoToEdit.id(), choreoToEdit.name(), choreoToEdit.choreoMoves().stream()
                 .map(Move::id)
                 .toList());
-        return choreoRepo.save(existingChoreo);
+        Choreo updatedChoreo = choreoRepo.save(existingChoreo);
+        return createChoreoDTO(updatedChoreo);
     }
 
     public void deleteChoreo(ChoreoDTO choreoToDelete){
