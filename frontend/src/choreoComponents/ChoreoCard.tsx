@@ -14,7 +14,7 @@ export default function ChoreoCard(props: ChoreoProps) {
     return (
 
         <div className="choreo-card">
-            <Box sx={{ boxShadow: 5, width: '80vw', mb: 2, padding: 1}}>
+            <Box component={'div'} sx={{ boxShadow: 5, width: '80vw', mb: 2, padding: 1}}>
                 <h3>{props.choreo.name.toUpperCase()}</h3>
                 {props.choreo.choreoMoves.map((move, index) =>
                     (<Card key={`${move.id}-${index}`}
@@ -23,13 +23,13 @@ export default function ChoreoCard(props: ChoreoProps) {
                             justifyContent: "flex-start",
                             margin: 2}}>
                             <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
+                                <Typography component={'div'} gutterBottom variant="h6">
                                     {move.name}
                                 </Typography>
-                                <Typography variant="body1" color="lightgrey">
+                                <Typography component={'div'} variant="body1" color="lightgrey">
                                     {move.count} - count
                                 </Typography>
-                                <Typography variant="body1" color="lightgrey">
+                                <Typography component={'div'} variant="body1" color="lightgrey">
                                     {move.style}
                                 </Typography>
                             </CardContent>

@@ -167,19 +167,19 @@ export default function ChoreoDetail(props: ChoreoDetailProps) {
                                 <Card key={`${move.id}-${index}`} className="choreo-move"
                                       sx={{backgroundColor: "#1B1E24", color: "lightgrey", margin: 2}}>
                                     <CardContent sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                                                <Typography gutterBottom variant="h6" component="div">
+                                                <Typography component={'div'} gutterBottom variant="h6">
                                                     {move.name}
                                                 </Typography>
-                                                <Typography variant="body1" color="lightgrey">
+                                                <Typography component={'div'} variant="body1" color="lightgrey">
                                                     {move.count} - count
                                                 </Typography>
-                                                <Typography variant="body1" color="lightgrey">
+                                                <Typography component={'div'} variant="body1" color="lightgrey">
                                                     {move.style}
                                                 </Typography>
-                                                <Typography variant="body1" color="lightgrey">
+                                                <Typography component={'div'} variant="body1" color="lightgrey">
                                                     {move.start}
                                                 </Typography>
-                                                <Typography variant="body1" color="lightgrey">
+                                                <Typography component={'div'} variant="body1" color="lightgrey">
                                                     {move.end}
                                                 </Typography>
                                                 <Box display="flex" justifyContent="flex-end">
