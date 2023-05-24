@@ -15,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.*;
 
+import static org.bson.assertions.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;

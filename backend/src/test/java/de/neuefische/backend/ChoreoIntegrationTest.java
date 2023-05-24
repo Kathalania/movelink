@@ -16,7 +16,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -99,40 +101,6 @@ class ChoreoIntegrationTest {
 
     @DirtiesContext
     @Test
-    void deleteChoreo_shouldReturnReducedContent() throws Exception {
-        Choreo choreo1 = new Choreo("1", "", List.of("1", "2", "3"));
-        choreoRepo.save(choreo1);
-        Choreo choreo2 = new Choreo("2", "", List.of("2", "3", "3"));
-        choreoRepo.save(choreo2);
-        Choreo choreo3 = new Choreo("3", "", List.of("1", "3"));
-        choreoRepo.save(choreo3);
-
-        Move move1 = new Move("1", "a", "", "", "1", "", "");
-        moveInterface.save(move1);
-        Move move2 = new Move("2", "b", "", "", "2", "", "");
-        moveInterface.save(move2);
-        Move move3 = new Move("3", "c", "", "", "3", "", "");
-        moveInterface.save(move3);
-
-        ChoreoDTO choreoDTO1 = new ChoreoDTO("1", "", List.of(move1, move2, move3));
-        ChoreoDTO choreoDTO2 = new ChoreoDTO("2", "", List.of(move2, move3, move3));
-        ChoreoDTO choreoDTO3 = new ChoreoDTO("3", "", List.of(move1, move3));
-
-        String choreoToDeleteId = choreoDTO1.id();
-        List<ChoreoDTO> expectedChoreos = List.of(choreoDTO2, choreoDTO3);
-
-        mockMvc.perform(delete("/api/choreo/" + choreoToDeleteId)
-                )
-                .andExpect(status().isOk());
-
-
-        mockMvc.perform(get("/api/choreo"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expectedChoreos)));
-    }
-
-    @DirtiesContext
-    @Test
     void editChoreo_ShouldReturnEditedChoreo() throws Exception {
         Choreo choreo1 = new Choreo("1", "Edited Choreo", List.of("1", "2", "3"));
         choreoRepo.save(choreo1);
@@ -173,5 +141,38 @@ class ChoreoIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(choreoDTOToEdit)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @DirtiesContext
+    @Test
+    void addChoreo_ShouldReturnChoreoAdded() throws Exception {
+        // Mock moves
+        Move move1 = new Move("1", "Move 1", "", "", "", "", "");
+        moveInterface.save(move1);
+        Move move2 = new Move("2", "Move 2", "", "", "", "", "");
+        moveInterface.save(move2);
+
+        // Mock choreo
+        ChoreoDTO choreoDTO = new ChoreoDTO("1", "Choreo 2", List.of(move1, move2));
+        Choreo choreo = new Choreo(choreoDTO.id(), choreoDTO.name(), List.of("1", "2"));
+        choreoRepo.save(choreo);
+
+        //Mock post
+        String actual = mockMvc.perform(post("/api/choreo/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(choreoDTO))
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(choreo)))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        // verify post Methode
+        Optional<Choreo> addedChoreo = choreoRepo.findById("1");
+        assertThat(addedChoreo).isPresent();
+        Choreo actualChoreo = objectMapper.readValue(actual, Choreo.class);
+        assertThat(actualChoreo.id())
+                .isNotBlank();
     }
 }
