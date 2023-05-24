@@ -3,6 +3,7 @@ import {NewChoreo} from "../models/Choreo";
 import {useNavigate} from "react-router-dom";
 import {Box, Button, Container, TextField} from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
+import {toast} from "react-toastify";
 
 type AddChoreoProps = {
     addChoreo: (newChoreo: NewChoreo) => void
@@ -20,6 +21,8 @@ export default function AddChoreo(props: AddChoreoProps) {
             choreoMoves: choreoMoves
         }
         props.addChoreo(newChoreo)
+        console.log("post successful")
+        toast.success("Choreo created")
         navigate("/choreos")
     }
 
