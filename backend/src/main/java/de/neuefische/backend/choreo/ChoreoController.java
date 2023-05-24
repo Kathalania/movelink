@@ -33,10 +33,11 @@ public class ChoreoController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteChoreo(@PathVariable String id, @RequestBody ChoreoDTO choreoToDelete){
-        if (choreoToDelete.id().equals(id)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Choreo does not exist");
+    public void deleteChoreo(@PathVariable String id) {
+        ChoreoDTO existingChoreo = choreoService.getChoreoDTOByChoreoId(id);
+        if (existingChoreo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Choreo not found");
         }
-        choreoService.deleteChoreo(choreoToDelete);
+        choreoService.deleteChoreo(existingChoreo);
     }
 }
